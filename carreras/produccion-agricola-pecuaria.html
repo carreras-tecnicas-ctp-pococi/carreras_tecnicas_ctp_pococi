@@ -16,15 +16,15 @@
     </div>
   </header>
   <main>
-    <section class="hero-career">
+    <section class="hero-career" aria-labelledby="career-title">
       <span class="career-big-icon">🌾</span>
-      <h1>Producción Agrícola Pecuaria</h1>
+      <h1 id="career-title">Producción Agrícola Pecuaria</h1>
       <p>Formación en agricultura sostenible y de precisión, producción animal, emprendimiento e innovación agropecuaria.</p>
     </section>
     <div class="sections-grid">
       <div class="section-card">
         <span class="sec-icon">✅</span>
-        <h3>Habilidades requeridas</h3>
+        <h2>Habilidades requeridas</h2>
         <ul>
           <li>Interés en animales y cultivos</li>
           <li>Trabajo en campo</li>
@@ -36,7 +36,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">💼</span>
-        <h3>Salida laboral</h3>
+        <h2>Salida laboral</h2>
         <ul>
           <li>Producción animal (inseminación, ordeño)</li>
           <li>Siembra y mercadeo agrícola</li>
@@ -48,7 +48,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">📚</span>
-        <h3>Plan de estudio</h3>
+        <h2>Plan de estudio</h2>
         <ul>
           <li>Administración de finca</li>
           <li>Producción agrícola (suelos, olericultura)</li>
@@ -60,7 +60,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">⚠️</span>
-        <h3>Retos</h3>
+        <h2>Retos</h2>
         <ul>
           <li>Tecnologías de precisión (IoT)</li>
           <li>Producción sostenible</li>
@@ -71,10 +71,10 @@
       </div>
     </div>
     <div class="share-section">
-      <button class="share-btn" id="share-btn" onclick="compartir()">
+      <button type="button" class="share-btn" id="share-btn" onclick="compartir()">
         📤 Compartir esta carrera
       </button>
-      <p class="share-msg" id="share-msg"></p>
+      <p class="share-msg" id="share-msg" aria-live="polite"></p>
     </div>
   </main>
   <footer class="site-footer">

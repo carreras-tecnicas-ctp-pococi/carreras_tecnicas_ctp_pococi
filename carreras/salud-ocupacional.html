@@ -16,15 +16,15 @@
     </div>
   </header>
   <main>
-    <section class="hero-career">
+    <section class="hero-career" aria-labelledby="career-title">
       <span class="career-big-icon">🦺</span>
-      <h1>Salud Ocupacional</h1>
+      <h1 id="career-title">Salud Ocupacional</h1>
       <p>Carrera orientada a promover y proteger la salud de las personas trabajadoras mediante la prevención de enfermedades y accidentes laborales.</p>
     </section>
     <div class="sections-grid">
       <div class="section-card">
         <span class="sec-icon">✅</span>
-        <h3>Habilidades requeridas</h3>
+        <h2>Habilidades requeridas</h2>
         <ul>
           <li>Interés en seguridad y bienestar</li>
           <li>Análisis de riesgos laborales</li>
@@ -36,7 +36,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">💼</span>
-        <h3>Salida laboral</h3>
+        <h2>Salida laboral</h2>
         <ul>
           <li>Inspección de riesgos laborales</li>
           <li>Elaboración de informes técnicos</li>
@@ -48,7 +48,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">📚</span>
-        <h3>Plan de estudio</h3>
+        <h2>Plan de estudio</h2>
         <ul>
           <li>Seguridad e higiene laboral</li>
           <li>Primeros auxilios</li>
@@ -60,7 +60,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">⚠️</span>
-        <h3>Retos</h3>
+        <h2>Retos</h2>
         <ul>
           <li>Normativas internacionales de seguridad</li>
           <li>Riesgos en entornos industriales</li>
@@ -71,10 +71,10 @@
       </div>
     </div>
     <div class="share-section">
-      <button class="share-btn" id="share-btn" onclick="compartir()">
+      <button type="button" class="share-btn" id="share-btn" onclick="compartir()">
         📤 Compartir esta carrera
       </button>
-      <p class="share-msg" id="share-msg"></p>
+      <p class="share-msg" id="share-msg" aria-live="polite"></p>
     </div>
   </main>
   <footer class="site-footer">

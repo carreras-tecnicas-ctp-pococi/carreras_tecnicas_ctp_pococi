@@ -16,15 +16,15 @@
     </div>
   </header>
   <main>
-    <section class="hero-career">
+    <section class="hero-career" aria-labelledby="career-title">
       <span class="career-big-icon">💻</span>
-      <h1>Informática en Redes</h1>
+      <h1 id="career-title">Informática en Redes</h1>
       <p>Carrera técnica que forma profesionales capaces de instalar, configurar y mantener redes e infraestructura TI. Academia Cisco certificada.</p>
     </section>
     <div class="sections-grid">
       <div class="section-card">
         <span class="sec-icon">✅</span>
-        <h3>Habilidades requeridas</h3>
+        <h2>Habilidades requeridas</h2>
         <ul>
           <li>Interés en tecnología y computación</li>
           <li>Resolución de problemas técnicos</li>
@@ -36,7 +36,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">💼</span>
-        <h3>Salida laboral</h3>
+        <h2>Salida laboral</h2>
         <ul>
           <li>Empresas de tecnología</li>
           <li>Departamentos de TI</li>
@@ -47,7 +47,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">📚</span>
-        <h3>Plan de estudio</h3>
+        <h2>Plan de estudio</h2>
         <ul>
           <li>Introducción a la Programación</li>
           <li>Soporte a PCs e impresoras</li>
@@ -59,7 +59,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">⚠️</span>
-        <h3>Retos</h3>
+        <h2>Retos</h2>
         <ul>
           <li>Evolución acelerada de redes</li>
           <li>Ciberseguridad empresarial</li>
@@ -70,10 +70,10 @@
       </div>
     </div>
     <div class="share-section">
-      <button class="share-btn" id="share-btn" onclick="compartir()">
+      <button type="button" class="share-btn" id="share-btn" onclick="compartir()">
         📤 Compartir esta carrera
       </button>
-      <p class="share-msg" id="share-msg"></p>
+      <p class="share-msg" id="share-msg" aria-live="polite"></p>
     </div>
   </main>
   <footer class="site-footer">

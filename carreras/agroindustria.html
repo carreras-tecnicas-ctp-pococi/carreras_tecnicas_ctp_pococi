@@ -16,15 +16,15 @@
     </div>
   </header>
   <main>
-    <section class="hero-career">
+    <section class="hero-career" aria-labelledby="career-title">
       <span class="career-big-icon">🏭</span>
-      <h1>Agroindustria</h1>
+      <h1 id="career-title">Agroindustria</h1>
       <p>Carrera técnica de alta demanda enfocada en procesos productivos, inspección y control de calidad en la industria alimentaria.</p>
     </section>
     <div class="sections-grid">
       <div class="section-card">
         <span class="sec-icon">✅</span>
-        <h3>Habilidades requeridas</h3>
+        <h2>Habilidades requeridas</h2>
         <ul>
           <li>Interés en ciencias de alimentos</li>
           <li>Trabajo en entornos industriales</li>
@@ -36,7 +36,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">💼</span>
-        <h3>Salida laboral</h3>
+        <h2>Salida laboral</h2>
         <ul>
           <li>Grandes multinacionales alimentarias</li>
           <li>PYMEs innovadoras</li>
@@ -48,7 +48,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">📚</span>
-        <h3>Plan de estudio</h3>
+        <h2>Plan de estudio</h2>
         <ul>
           <li>Principios de Industria Alimentaria</li>
           <li>Microbiología Básica</li>
@@ -61,7 +61,7 @@
       </div>
       <div class="section-card">
         <span class="sec-icon">⚠️</span>
-        <h3>Retos</h3>
+        <h2>Retos</h2>
         <ul>
           <li>Normativas de inocuidad alimentaria</li>
           <li>IoT y Big Data alimentario</li>
@@ -72,10 +72,10 @@
       </div>
     </div>
     <div class="share-section">
-      <button class="share-btn" id="share-btn" onclick="compartir()">
+      <button type="button" class="share-btn" id="share-btn" onclick="compartir()">
         📤 Compartir esta carrera
       </button>
-      <p class="share-msg" id="share-msg"></p>
+      <p class="share-msg" id="share-msg" aria-live="polite"></p>
     </div>
   </main>
   <footer class="site-footer">
