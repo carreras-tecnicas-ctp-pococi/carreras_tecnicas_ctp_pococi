@@ -116,7 +116,7 @@ Que el visitante salga con una idea clara de cuál carrera le interesa. No se re
 - Degradado `linear-gradient(160deg, #1a237e, #c0392b)`
 - Ícono emoji grande (48px)
 - H1 con nombre de la carrera
-- Párrafo con descripción general (primera línea del `descripcion.md` de cada carrera)
+- Párrafo con descripción general (contenido de la sección `## Descripción General` del `descripcion.md` de cada carrera)
 
 ### Grilla de secciones (2×2)
 Tarjetas blancas con sombra, cada una con ícono, título y lista de ítems:
@@ -124,14 +124,14 @@ Tarjetas blancas con sombra, cada una con ícono, título y lista de ítems:
 | Tarjeta | Ícono | Fuente de datos |
 |---|---|---|
 | Habilidades requeridas | ✅ | `## Habilidades Requeridas` del `.md` |
-| Salida laboral | 💼 | `## Perfil de Salida` → áreas de trabajo |
+| Salida laboral | 💼 | Subsección `### Áreas de trabajo:` dentro de `## Perfil de Salida` |
 | Plan de estudio | 📚 | `## Plan de Estudio` |
 | Retos | ⚠️ | `## Retos a Enfrentar` |
 
 ### Botón compartir
 - Ancho completo, fondo `#d4a017`, texto "📤 Compartir esta carrera"
 - Usa la **Web Share API** (`navigator.share`) cuando está disponible (móvil)
-- Fallback: copia la URL al portapapeles con mensaje de confirmación
+- Fallback: copia la URL al portapapeles y muestra un mensaje inline debajo del botón ("¡Enlace copiado!") que desaparece a los 2 segundos
 
 ---
 
@@ -148,7 +148,7 @@ Cada archivo `.md` tiene secciones estructuradas que se mapean directamente a la
 
 ## Decisiones de diseño
 
-- **Mobile-first:** optimizado para teléfonos móviles (layout vertical, tarjetas en 2 columnas solo en la grilla de secciones)
+- **Mobile-first:** optimizado para teléfonos móviles (layout vertical, tarjetas en 2 columnas solo en la grilla de secciones a partir de `360px` de ancho — aplica a prácticamente todos los smartphones modernos)
 - **Sin dependencias:** no requiere Node.js, npm ni herramientas de build para funcionar
 - **URLs compartibles:** cada carrera tiene su propia URL estática, compatible con compartir por WhatsApp, Instagram, etc.
 - **Sin JavaScript crítico:** el sitio funciona aunque JS falle; el botón compartir es la única función JS
