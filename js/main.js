@@ -3,6 +3,8 @@ function compartir() {
   var btn = document.getElementById('share-btn');
   var msg = document.getElementById('share-msg');
 
+  if (!btn || !msg) return;
+
   if (navigator.share) {
     navigator.share({
       title: document.title,
@@ -11,7 +13,7 @@ function compartir() {
     }).catch(function () {
       // El usuario canceló — no hacer nada
     });
-  } else {
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(window.location.href).then(function () {
       msg.textContent = '¡Enlace copiado!';
       btn.disabled = true;
@@ -22,5 +24,7 @@ function compartir() {
     }).catch(function () {
       msg.textContent = 'Copiá este enlace: ' + window.location.href;
     });
+  } else {
+    msg.textContent = 'Copiá este enlace: ' + window.location.href;
   }
 }
