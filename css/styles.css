@@ -156,11 +156,16 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.career-item a:hover,
-.career-item a:focus {
+.career-item a:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
-  outline: none;
+}
+
+.career-item a:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
 }
 
 .career-emoji {
@@ -229,9 +234,15 @@ body {
 /* ── GRILLA DE SECCIONES (carrera) ── */
 .sections-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
   padding: 16px;
+}
+
+@media (min-width: 360px) {
+  .sections-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .section-card {
@@ -307,6 +318,15 @@ body {
 .share-btn:disabled {
   opacity: 0.7;
   cursor: default;
+}
+
+.share-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.share-btn:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
 }
 
 .share-msg {
