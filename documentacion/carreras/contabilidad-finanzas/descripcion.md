@@ -1,6 +1,6 @@
-# Especialidad: Contabilidad y Finanzas
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Especialidad con alta demanda en el mercado laboral, que brinda formación en contabilidad, finanzas y administración empresarial. Sirve como base sólida para cualquier carrera universitaria y permite insertarse en empresas nacionales e internacionales.
 
 ---

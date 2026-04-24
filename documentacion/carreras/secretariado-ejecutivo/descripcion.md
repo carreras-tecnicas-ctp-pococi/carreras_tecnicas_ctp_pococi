@@ -1,6 +1,6 @@
-# Especialidad: Secretariado Ejecutivo
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Especialidad dinámica y actual con gran proyección laboral que brinda formación integral en gestión administrativa, atención al cliente y servicios secretariales. Conecta a los estudiantes con el mundo laboral real y los prepara para enfrentar con éxito cualquier reto académico o profesional. El CTP de Pococí cuenta con un Centro Corporativo diseñado para practicar atención al cliente y brindar servicios secretariales a la comunidad estudiantil.
 
 ---

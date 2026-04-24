@@ -1,6 +1,6 @@
-# Especialidad: Configuración y Soporte
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Carrera técnica que forma profesionales capaces de instalar, configurar y dar mantenimiento a equipos de computación e infraestructura de red, siguiendo las últimas tendencias y normativas de seguridad. El CTP de Pococí es Academia Cisco certificada.
 
 ---

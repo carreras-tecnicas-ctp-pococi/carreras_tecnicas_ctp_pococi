@@ -143,7 +143,13 @@ body {
   gap: 10px;
 }
 
-.career-item a {
+.career-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.career-item .career-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -156,14 +162,39 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.career-item a:hover {
+.career-item .career-link:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
 
-.career-item a:focus-visible {
+.career-item .career-link:focus-visible {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.download-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid rgba(26, 35, 126, 0.2);
+  transition: background 0.15s;
+}
+
+.download-link:hover {
+  background: rgba(26, 35, 126, 0.05);
+}
+
+.download-link:focus-visible {
   outline: 2px solid var(--yellow);
   outline-offset: 2px;
 }
@@ -292,9 +323,38 @@ body {
   flex-shrink: 0;
 }
 
-/* ── BOTÓN COMPARTIR ── */
+/* ── BOTONES COMPARTIR Y DESCARGAR (carrera) ── */
 .share-section {
   padding: 0 16px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--blue);
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(26, 35, 126, 0.25);
+  transition: opacity 0.2s;
+}
+
+.download-btn:hover {
+  opacity: 0.9;
+}
+
+.download-btn:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
 }
 
 .share-btn {

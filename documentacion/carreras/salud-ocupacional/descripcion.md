@@ -1,6 +1,6 @@
-# Especialidad: Salud Ocupacional
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Modalidad Comercial y Servicios. Carrera orientada a promover y proteger la salud de las personas trabajadoras mediante la prevención y control de enfermedades y accidentes en el trabajo, así como la eliminación de factores y condiciones que pongan en peligro su salud y seguridad (OIT). "Más que una opción académica, un estilo de vida."
 
 ---

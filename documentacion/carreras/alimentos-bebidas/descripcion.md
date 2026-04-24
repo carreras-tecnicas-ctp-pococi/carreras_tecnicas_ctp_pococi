@@ -1,4 +1,4 @@
-# Organización de Operaciones y Servicios de Alimentos y Bebidas
+# Carrera Tecnica
 
 ## Descripción general
 

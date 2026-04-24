@@ -1,6 +1,6 @@
-# Especialidad: Banca y Finanzas
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Especialidad con poco tiempo en el mercado pero con alta demanda en el campo laboral. Forma técnicos medios capaces de desarrollarse en el ámbito bancario, financiero y de seguros de manera eficiente y eficaz, con énfasis en tecnologías digitales financieras y gestión de pensiones.
 
 ---

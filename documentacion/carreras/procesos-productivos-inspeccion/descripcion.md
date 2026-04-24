@@ -1,6 +1,6 @@
-# Especialidad: Procesos Productivos e Inspección
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Carrera técnica de alta demanda laboral enfocada en los procesos productivos, inspección y control de calidad en la industria alimentaria. Forma técnicos medios capaces de garantizar la inocuidad, calidad e innovación en la producción de alimentos. El programa tiene una duración de 3 años y es ofrecido en múltiples CTPs del país.
 
 ---

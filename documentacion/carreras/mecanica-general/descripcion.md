@@ -1,6 +1,6 @@
-# Especialidad: Mecánica General
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Carrera técnica que forma técnicos medios en el diagnóstico, mantenimiento y reparación de motores, sistemas mecánicos y equipos industriales. Ofrece una sólida base en mecánica automotriz e industrial con alta demanda laboral en el sector productivo.
 
 ---

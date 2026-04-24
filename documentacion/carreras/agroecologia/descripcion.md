@@ -1,6 +1,6 @@
-# Especialidad: Agroecología
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Carrera técnica enfocada en la producción sostenible, conservación de los recursos naturales y gestión ambiental. Forma técnicos medios capaces de ejecutar actividades productivas agroecológicas y aplicar métodos de gestión ambiental en procesos productivos.
 
 ---

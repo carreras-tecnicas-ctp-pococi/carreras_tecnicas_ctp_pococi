@@ -1,6 +1,6 @@
-# Especialidad: Producción Agrícola y Pecuaria
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Formación de técnicos medios con conocimientos en agricultura sostenible y de precisión, producción animal de especies mayores y menores, emprendimiento, innovación y extensión agropecuaria.
 
 ---

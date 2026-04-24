@@ -1,6 +1,6 @@
-# Especialidad: Diseño Publicitario
+# Carrera Tecnica
 
-## Descripción General
+## Descripción general
 Carrera técnica creativa que forma profesionales en comunicación visual, diseño gráfico y producción de contenido publicitario. Los diseñadores publicitarios comunican ideas, productos o servicios a través de imágenes, textos y recursos visuales atractivos, con el objetivo de captar la atención del público y persuadirlo.
 
 El CTP de Pococí cuenta con recursos especializados: laboratorio de cómputo equipado, equipo fotográfico profesional, impresora 3D y equipo de sublimación para personalización de productos.

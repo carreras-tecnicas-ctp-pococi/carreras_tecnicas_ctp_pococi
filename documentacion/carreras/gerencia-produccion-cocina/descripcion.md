@@ -1,4 +1,4 @@
-# Gerencia y Producción en Cocina
+# Carrera Tecnica
 
 ## Descripción general
 
