@@ -7,6 +7,7 @@ let _estado = {
   respuestas: {},
   indice: 0,
   tipo: null,
+  nombre: null,
 };
 
 // ─── Funciones puras ───────────────────────────────────────────────
@@ -39,30 +40,47 @@ function calcularResultado(respuestas, tipo) {
   return scores;
 }
 
-function generarHashURL(scores) {
-  const vals = AREAS.map(a => (scores[a.id] || 0).toFixed(1));
-  return '#r=' + vals.join('-');
+function _b64enc(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+function _b64dec(b64) {
+  return decodeURIComponent(escape(atob(b64)));
+}
+
+function generarHashURL(scores, nombre) {
+  const vals = AREAS.map(a => (scores[a.id] || 0).toFixed(1)).join('-');
+  return '#r=' + _b64enc((nombre || '') + '|' + vals);
 }
 
 function leerHashURL() {
   const hash = window.location.hash;
   if (!hash.startsWith('#r=')) return null;
-  const partes = hash.slice(3).split('-');
-  if (partes.length !== AREAS.length) return null;
-  const scores = {};
-  for (let i = 0; i < AREAS.length; i++) {
-    const v = parseFloat(partes[i]);
-    if (isNaN(v) || v < 0 || v > 5) return null;
-    scores[AREAS[i].id] = v;
+  try {
+    const raw = _b64dec(hash.slice(3));
+    const sep = raw.indexOf('|');
+    if (sep === -1) return null;
+    const nombre = raw.slice(0, sep) || null;
+    const partes = raw.slice(sep + 1).split('-');
+    if (partes.length !== AREAS.length) return null;
+    const scores = {};
+    for (let i = 0; i < AREAS.length; i++) {
+      const v = parseFloat(partes[i]);
+      if (isNaN(v) || v < 0 || v > 5) return null;
+      scores[AREAS[i].id] = v;
+    }
+    return { scores, nombre };
+  } catch (_) {
+    return null;
   }
-  return scores;
 }
 
-function guardarResultado(tipo, scores) {
+function guardarResultado(tipo, scores, nombre) {
   try {
     const clave = tipo === 'intereses' ? 'ctp_intereses_resultado' : 'ctp_habilidades_resultado';
     localStorage.setItem(clave, JSON.stringify({
       scores,
+      nombre: nombre || null,
       fecha: new Date().toISOString().slice(0, 10),
     }));
   } catch (_) {}
@@ -82,21 +100,20 @@ function cargarResultado(tipo) {
 }
 
 function calcularCompatibilidad(scoresUsuario, perfilCarrera) {
-  const maxDist = Math.sqrt(AREAS.length * 25);
-  const dist = Math.sqrt(
-    AREAS.reduce((sum, a) => {
-      const d = (scoresUsuario[a.id] || 0) - (perfilCarrera[a.id] || 0);
-      return sum + d * d;
-    }, 0)
-  );
-  return Math.max(0, Math.round((1 - dist / maxDist) * 100));
+  let sumMatch = 0, sumMax = 0;
+  AREAS.forEach(a => {
+    const req = perfilCarrera[a.id] || 0;
+    const usr = scoresUsuario[a.id] || 0;
+    if (req > 0) {
+      sumMatch += Math.min(usr, req);
+      sumMax += req;
+    }
+  });
+  return sumMax === 0 ? 0 : Math.round((sumMatch / sumMax) * 100);
 }
 
 function calcularCompatibilidadCombinada(scoresI, scoresH, perfil) {
-  const maxDist = Math.sqrt(AREAS.length * 25);
-  const dI = Math.sqrt(AREAS.reduce((s, a) => { const d = (scoresI[a.id]||0)-(perfil[a.id]||0); return s+d*d; }, 0));
-  const dH = Math.sqrt(AREAS.reduce((s, a) => { const d = (scoresH[a.id]||0)-(perfil[a.id]||0); return s+d*d; }, 0));
-  return Math.max(0, Math.round((1 - (dI + dH) / 2 / maxDist) * 100));
+  return Math.round((calcularCompatibilidad(scoresI, perfil) + calcularCompatibilidad(scoresH, perfil)) / 2);
 }
 
 // ─── Radar ─────────────────────────────────────────────────────────
@@ -132,40 +149,147 @@ function mostrarRadar(canvasId, scoresUsuario, scoresCarrera = null, labelUsuari
     });
   }
 
+  const labels = AREAS.map(a => a.nombre.includes(' / ') ? a.nombre.split(' / ') : a.nombre);
+
   const chart = new Chart(canvas.getContext('2d'), {
     type: 'radar',
-    data: { labels: AREAS.map(a => a.nombre), datasets },
+    data: { labels, datasets },
     options: {
+      layout: { padding: 16 },
       scales: {
         r: {
           min: 0, max: 5,
           ticks: { stepSize: 1, display: false },
           grid: { color: 'rgba(0,0,0,0.1)' },
           angleLines: { color: 'rgba(0,0,0,0.1)' },
-          pointLabels: { font: { size: 11 }, color: '#333' },
+          pointLabels: { font: { size: 11 }, color: '#333', padding: 8 },
         }
       },
       plugins: { legend: { display: false } },
       responsive: true,
       maintainAspectRatio: true,
+      onClick: (evt, _elements, chart) => {
+        const cx = (chart.chartArea.left + chart.chartArea.right) / 2;
+        const cy = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+        const dx = evt.x - cx;
+        const dy = evt.y - cy;
+        let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+        if (angle < 0) angle += 360;
+        const idx = Math.round(angle / (360 / AREAS.length)) % AREAS.length;
+        _mostrarModalArea(AREAS[idx]);
+      },
     },
   });
+
+  canvas.style.cursor = 'pointer';
 
   _charts.set(canvasId, chart);
 }
 
-function descargarRadar(canvasId, tipo) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  canvas.toBlob(blob => {
+function descargarRadar(radarCanvasId, tipo) {
+  const radarCanvas = document.getElementById(radarCanvasId);
+  const barCanvas   = document.getElementById('ranking-canvas');
+  if (!radarCanvas) return;
+
+  const W      = 560;
+  const pad    = 20;
+  const dpr    = 2;
+
+  const headerH = _estado.nombre ? 76 : 56;
+  const chartW  = W - pad * 2;
+  const radarH  = chartW;
+  const barH    = barCanvas ? Math.round(chartW * barCanvas.height / barCanvas.width) : 0;
+  const legendH = 20;
+  const sp      = 12;
+  const totalH  = headerH + sp + legendH + sp / 2 + radarH
+                + (barH > 0 ? sp + 22 + sp / 2 + barH : 0)
+                + sp + 20;
+
+  const off = document.createElement('canvas');
+  off.width  = W * dpr;
+  off.height = totalH * dpr;
+  const ctx = off.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  // ── fondo ──
+  ctx.fillStyle = '#f5f5f5';
+  ctx.fillRect(0, 0, W, totalH);
+
+  // ── encabezado ──
+  ctx.fillStyle = '#1a237e';
+  ctx.fillRect(0, 0, W, headerH);
+  ctx.fillStyle = '#d4a017';
+  ctx.fillRect(0, headerH - 3, W, 3);
+
+  ctx.textBaseline = 'top';
+  ctx.textAlign    = 'left';
+  ctx.fillStyle    = '#ffffff';
+  ctx.font         = 'bold 15px system-ui,sans-serif';
+  ctx.fillText('CTP Pococí', pad, 13);
+  ctx.font = '12px system-ui,sans-serif';
+  ctx.fillText(tipo === 'intereses' ? 'Test de Intereses' : 'Test de Habilidades', pad, 33);
+  if (_estado.nombre) {
+    ctx.font      = 'bold 13px system-ui,sans-serif';
+    ctx.fillStyle = '#d4a017';
+    ctx.fillText(_estado.nombre, pad, 53);
+  }
+
+  let y = headerH + sp;
+
+  // ── leyenda ──
+  const dotR = 5;
+  ctx.textBaseline = 'middle';
+  ctx.font = '11px system-ui,sans-serif';
+
+  ctx.fillStyle = '#1a237e';
+  ctx.beginPath(); ctx.arc(pad + dotR, y + dotR, dotR, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#333';
+  ctx.fillText('Tu perfil', pad + dotR * 2 + 6, y + dotR);
+
+  const leyendaEl     = document.getElementById('leyenda-carrera');
+  const leyendaTexto  = document.getElementById('leyenda-carrera-texto');
+  if (leyendaEl && !leyendaEl.hidden && leyendaTexto) {
+    const lx = pad + dotR * 2 + 6 + ctx.measureText('Tu perfil').width + 20;
+    ctx.fillStyle = '#d4a017';
+    ctx.beginPath(); ctx.arc(lx + dotR, y + dotR, dotR, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText(leyendaTexto.textContent, lx + dotR * 2 + 6, y + dotR);
+  }
+  y += legendH + sp / 2;
+
+  // ── radar ──
+  ctx.drawImage(radarCanvas, pad, y, chartW, radarH);
+  y += radarH;
+
+  // ── gráfico de barras ──
+  if (barCanvas && barH > 0) {
+    y += sp;
+    ctx.fillStyle    = '#555';
+    ctx.textBaseline = 'top';
+    ctx.font         = '11px system-ui,sans-serif';
+    ctx.fillText('Compatibilidad con cada carrera técnica', pad, y);
+    y += 22;
+    ctx.drawImage(barCanvas, pad, y, chartW, barH);
+    y += barH;
+  }
+
+  // ── pie ──
+  y += sp;
+  ctx.fillStyle    = '#aaa';
+  ctx.font         = '10px system-ui,sans-serif';
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText('CTP Pococí — Tests Vocacionales', W / 2, y);
+
+  const nombre   = (_estado.nombre || '').toLowerCase().replace(/\s+/g, '-');
+  const filename = `resultado-${tipo}${nombre ? '-' + nombre : ''}.png`;
+
+  off.toBlob(blob => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `resultado-${tipo}.png`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
   });
 }
 
@@ -174,15 +298,26 @@ function descargarRadar(canvasId, tipo) {
 function iniciarTest(preguntas, tipo) {
   _estado = { preguntas: shuffle(preguntas), respuestas: {}, indice: 0, tipo };
 
-  const hashScores = leerHashURL();
-  if (hashScores) {
-    _mostrarResultados(hashScores);
+  const hashData = leerHashURL();
+  if (hashData) {
+    _estado.nombre = hashData.nombre;
+    _mostrarResultados(hashData.scores);
     return;
   }
   _mostrarPantalla('pantalla-inicio');
 }
 
 function comenzarTest() {
+  _mostrarPantalla('pantalla-nombre');
+  const input = document.getElementById('input-nombre');
+  if (input) { input.value = ''; input.focus(); }
+}
+
+function confirmarNombre() {
+  const input = document.getElementById('input-nombre');
+  const nombre = input ? input.value.trim() : '';
+  if (!nombre) return;
+  _estado.nombre = nombre;
   _estado.indice = 0;
   _mostrarPantalla('pantalla-pregunta');
   _renderPregunta();
@@ -196,7 +331,7 @@ function irAtras() {
 }
 
 function _mostrarPantalla(id) {
-  ['pantalla-inicio', 'pantalla-pregunta', 'pantalla-resultados'].forEach(p => {
+  ['pantalla-inicio', 'pantalla-nombre', 'pantalla-pregunta', 'pantalla-resultados'].forEach(p => {
     const el = document.getElementById(p);
     if (el) el.hidden = (el.id !== id);
   });
@@ -254,7 +389,7 @@ function _responder(idPregunta, valor) {
 
   if (_estado.indice >= _estado.preguntas.length) {
     const scores = calcularResultado(_estado.respuestas, _estado.tipo);
-    guardarResultado(_estado.tipo, scores);
+    guardarResultado(_estado.tipo, scores, _estado.nombre);
     _mostrarResultados(scores);
   } else {
     _renderPregunta();
@@ -264,53 +399,139 @@ function _responder(idPregunta, valor) {
 function _mostrarResultados(scores) {
   _mostrarPantalla('pantalla-resultados');
   window.scrollTo(0, 0);
+
+  const titulo = document.getElementById('resultados-titulo');
+  if (titulo) {
+    if (_estado.nombre) {
+      titulo.textContent = _estado.tipo === 'intereses'
+        ? `${_estado.nombre}, estas son tus áreas de interés`
+        : `${_estado.nombre}, estas son tus habilidades`;
+    } else {
+      titulo.textContent = 'Tus resultados';
+    }
+  }
+
   mostrarRadar('radar-canvas', scores);
-  _renderChipsArea();
-  _renderChipsCarrera(scores);
-  history.replaceState(null, '', generarHashURL(scores));
+  _mostrarBarrasCarreras('ranking-canvas', scores);
+  history.replaceState(null, '', generarHashURL(scores, _estado.nombre));
 }
 
-function _renderChipsArea() {
-  const cont = document.getElementById('chips-area');
-  if (!cont) return;
-  cont.innerHTML = '';
-  AREAS.forEach(area => {
-    const btn = document.createElement('button');
-    btn.className = 'chip chip--area';
-    btn.textContent = area.nombre;
-    btn.onclick = () => _mostrarModalArea(area);
-    cont.appendChild(btn);
+function _mostrarBarrasCarreras(canvasId, scores) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  if (_charts.has(canvasId)) {
+    _charts.get(canvasId).destroy();
+    _charts.delete(canvasId);
+  }
+
+  const ranking = CARRERAS.map(c => ({
+    carrera: c,
+    label: _abreviarNombre(c),
+    pct: calcularCompatibilidad(scores, c.perfil),
+  })).sort((a, b) => b.pct - a.pct);
+
+  const colorBase = 'rgba(26,35,126,0.6)';
+  const colorActivo = '#d4a017';
+  let selectedIdx = null;
+
+  const barLabelsPlugin = {
+    id: 'barLabels',
+    afterDraw(chart) {
+      const ctx = chart.ctx;
+      const dataset = chart.data.datasets[0];
+      const meta = chart.getDatasetMeta(0);
+      meta.data.forEach((bar, idx) => {
+        const text = dataset.data[idx] + '%';
+        const barLen = bar.x - bar.base;
+        ctx.save();
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textBaseline = 'middle';
+        const tw = ctx.measureText(text).width;
+        if (barLen > tw + 12) {
+          ctx.fillStyle = 'white';
+          ctx.textAlign = 'right';
+          ctx.fillText(text, bar.x - 5, bar.y);
+        } else {
+          ctx.fillStyle = '#555';
+          ctx.textAlign = 'left';
+          ctx.fillText(text, bar.x + 4, bar.y);
+        }
+        ctx.restore();
+      });
+    },
+  };
+
+  const chart = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ranking.map(r => r.label),
+      datasets: [{
+        data: ranking.map(r => r.pct),
+        backgroundColor: ranking.map(() => colorBase),
+        borderRadius: 4,
+      }],
+    },
+    plugins: [barLabelsPlugin],
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      onClick: (_evt, elements) => {
+        if (!elements.length) return;
+        const idx = elements[0].index;
+        const carrera = ranking[idx].carrera;
+        const pct = ranking[idx].pct;
+        const colors = ranking.map(() => colorBase);
+        const leyenda = document.getElementById('leyenda-carrera');
+        const leyendaTexto = document.getElementById('leyenda-carrera-texto');
+        const desc = document.getElementById('descripcion-match');
+        if (selectedIdx === idx) {
+          selectedIdx = null;
+          mostrarRadar('radar-canvas', scores);
+          if (leyenda) leyenda.hidden = true;
+          if (desc) desc.hidden = true;
+        } else {
+          selectedIdx = idx;
+          colors[idx] = colorActivo;
+          mostrarRadar('radar-canvas', scores, carrera.perfil, 'Tu perfil', carrera.nombre);
+          if (leyenda) leyenda.hidden = false;
+          if (leyendaTexto) leyendaTexto.textContent = `${carrera.nombre} · ${pct}%`;
+          if (desc) { desc.textContent = carrera.descripcion_match; desc.hidden = false; }
+        }
+        chart.data.datasets[0].backgroundColor = colors;
+        chart.update();
+      },
+      scales: {
+        x: {
+          min: 0, max: 100,
+          ticks: { callback: v => v + '%', font: { size: 11 } },
+          grid: { color: 'rgba(0,0,0,0.08)' },
+        },
+        y: { ticks: { font: { size: 10 } } },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: ctx => ranking[ctx[0].dataIndex].carrera.nombre,
+            label: ctx => ` ${ctx.raw}% de compatibilidad`,
+          },
+        },
+      },
+    },
   });
+
+  canvas.style.cursor = 'pointer';
+  _charts.set(canvasId, chart);
 }
 
-function _renderChipsCarrera(scores) {
-  const cont = document.getElementById('chips-carrera');
-  if (!cont) return;
-  cont.innerHTML = '';
-  let carreraActivaId = null;
-
-  CARRERAS.forEach(carrera => {
-    const btn = document.createElement('button');
-    btn.className = 'chip chip--carrera';
-    btn.innerHTML = `${carrera.emoji} ${carrera.nombre}`;
-    btn.onclick = () => {
-      if (carreraActivaId === carrera.id) {
-        carreraActivaId = null;
-        btn.classList.remove('chip--activo');
-        mostrarRadar('radar-canvas', scores);
-        const desc = document.getElementById('descripcion-match');
-        if (desc) desc.hidden = true;
-      } else {
-        carreraActivaId = carrera.id;
-        cont.querySelectorAll('.chip--carrera').forEach(b => b.classList.remove('chip--activo'));
-        btn.classList.add('chip--activo');
-        mostrarRadar('radar-canvas', scores, carrera.perfil);
-        const desc = document.getElementById('descripcion-match');
-        if (desc) { desc.textContent = carrera.descripcion_match; desc.hidden = false; }
-      }
-    };
-    cont.appendChild(btn);
-  });
+function _abreviarNombre(carrera) {
+  const maxLen = 26;
+  const nombre = carrera.nombre.length > maxLen
+    ? carrera.nombre.slice(0, maxLen - 1) + '…'
+    : carrera.nombre;
+  return carrera.emoji + ' ' + nombre;
 }
 
 function _mostrarModalArea(area) {

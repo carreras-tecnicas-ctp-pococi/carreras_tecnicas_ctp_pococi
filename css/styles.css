@@ -872,6 +872,43 @@ body {
   color: white;
 }
 
+/* ── INPUT DE NOMBRE ────────────────────────────────────────────── */
+.input-nombre {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.15rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #222;
+  transition: border-color 0.15s;
+}
+
+.input-nombre:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+/* ── TÍTULO PERSISTENTE DE TEST ─────────────────────────────────── */
+.test-titulo-pagina {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blue);
+  padding: 10px 0 12px;
+  margin-bottom: 4px;
+  border-bottom: 2px solid var(--yellow);
+}
+
+/* ── GRÁFICO DE RANKING DE CARRERAS ─────────────────────────────── */
+.ranking-chart-cont {
+  position: relative;
+  height: 380px;
+  margin-bottom: 20px;
+}
+
 @media (min-width: 500px) {
   .tests-cards {
     flex-direction: row;

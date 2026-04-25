@@ -25,12 +25,25 @@
 
   <main class="test-page">
 
+    <div class="test-titulo-pagina">💪 Test de Habilidades</div>
+
     <section id="pantalla-inicio" class="test-inicio">
       <h1>💪 Test de Habilidades</h1>
       <p>Vas a ver 36 habilidades. Indicá qué tan bien las manejás.</p>
       <p>Sé honesto/a — esto es para ayudarte a conocerte mejor.</p>
       <p><em>Tiempo estimado: ~9 minutos.</em></p>
       <button class="btn btn-primary" onclick="comenzarTest()">Comenzar →</button>
+    </section>
+
+    <section id="pantalla-nombre" class="test-inicio" hidden>
+      <h2>¿Cómo te llamás?</h2>
+      <p>Escribí tu nombre para personalizar tus resultados.</p>
+      <input
+        type="text" id="input-nombre" class="input-nombre"
+        placeholder="Tu nombre" autocomplete="given-name" maxlength="40"
+        oninput="document.getElementById('btn-continuar-nombre').disabled = !this.value.trim()"
+        onkeydown="if(event.key==='Enter' && this.value.trim()) confirmarNombre()">
+      <button class="btn btn-primary" id="btn-continuar-nombre" onclick="confirmarNombre()" disabled>Continuar →</button>
     </section>
 
     <section id="pantalla-pregunta" hidden>
@@ -46,25 +59,26 @@
     </section>
 
     <section id="pantalla-resultados" hidden>
-      <h2 class="resultados-titulo">Tus resultados</h2>
+      <h2 class="resultados-titulo" id="resultados-titulo">Tus resultados</h2>
+      <p style="font-size:.9rem;font-weight:700;color:#444;margin-bottom:16px">Recordá analizar estos resultados con tu orientador(a).</p>
       <p style="color:#666;font-size:.9rem;margin-bottom:16px">
         Este radar muestra qué tan desarrolladas están tus habilidades. Seleccioná una carrera para ver cómo se compara con tu perfil.
       </p>
 
       <div class="radar-leyenda">
         <span><span class="leyenda-dot leyenda-dot--usuario"></span>Tu perfil</span>
-        <span><span class="leyenda-dot leyenda-dot--carrera"></span>Carrera seleccionada</span>
+        <span id="leyenda-carrera" hidden><span class="leyenda-dot leyenda-dot--carrera"></span><span id="leyenda-carrera-texto"></span></span>
       </div>
 
       <div class="radar-cont">
         <canvas id="radar-canvas" aria-label="Gráfico de radar de resultados"></canvas>
       </div>
+      <p style="font-size:.8rem;color:#888;margin-bottom:16px">Tocá el gráfico para ver la descripción de cada área.</p>
 
-      <p style="font-size:.8rem;color:#888;margin-bottom:6px">Tocá un área para ver su descripción:</p>
-      <div class="chips-cont" id="chips-area"></div>
-
-      <p style="font-size:.8rem;color:#888;margin-bottom:6px;margin-top:16px">Comparar con una carrera:</p>
-      <div class="chips-cont" id="chips-carrera"></div>
+      <p style="font-size:.8rem;color:#888;margin-bottom:6px;font-weight:700">Compatibilidad con cada carrera técnica — tocá una barra para comparar:</p>
+      <div class="ranking-chart-cont">
+        <canvas id="ranking-canvas" aria-label="Gráfico de compatibilidad con carreras técnicas"></canvas>
+      </div>
 
       <p class="descripcion-match" id="descripcion-match" hidden></p>
 
