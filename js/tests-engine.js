@@ -74,7 +74,7 @@ function cargarResultado(tipo) {
     const raw = localStorage.getItem(clave);
     if (!raw) return null;
     const data = JSON.parse(raw);
-    if (!data || typeof data.scores !== 'object' || !data.fecha) return null;
+    if (!data || data.scores === null || typeof data.scores !== 'object' || !data.fecha) return null;
     return data;
   } catch (_) {
     return null;
