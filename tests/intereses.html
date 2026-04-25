@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Test de Intereses — Identificá tus intereses y descubrí qué carreras técnicas del CTP Pococí se alinean con vos.">
+  <title>Test de Intereses — CTP Pococí</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <img src="../logo.jpeg" alt="Logo CTP Pococí" width="36" height="36">
+      <div class="site-name">
+        CTP Pococí
+        <span>Ciencia · Virtud · Trabajo</span>
+      </div>
+    </div>
+    <nav style="display:flex;gap:12px;align-items:center">
+      <a href="index.html" class="nav-link-tests">← Tests</a>
+      <a href="../index.html" class="back-link">Inicio</a>
+    </nav>
+  </header>
+
+  <main class="test-page">
+
+    <div class="test-titulo-pagina">🎯 Test de Intereses</div>
+
+    <section id="pantalla-inicio" class="test-inicio">
+      <h1>🎯 Test de Intereses</h1>
+      <p>Vas a ver 40 actividades. Indicá qué tanto te gustaría hacerlas.</p>
+      <p>No hay respuestas correctas ni incorrectas — solo contá lo que realmente sentís.</p>
+      <p><em>Tiempo estimado: ~8 minutos.</em></p>
+      <button class="btn btn-primary" onclick="comenzarTest()">Comenzar →</button>
+    </section>
+
+    <section id="pantalla-nombre" class="test-inicio" hidden>
+      <h2>¿Cómo te llamás?</h2>
+      <p>Escribí tu nombre para personalizar tus resultados.</p>
+      <input
+        type="text" id="input-nombre" class="input-nombre"
+        placeholder="Tu nombre" autocomplete="given-name" maxlength="40"
+        oninput="document.getElementById('btn-continuar-nombre').disabled = !this.value.trim()"
+        onkeydown="if(event.key==='Enter' && this.value.trim()) confirmarNombre()">
+      <button class="btn btn-primary" id="btn-continuar-nombre" onclick="confirmarNombre()" disabled>Continuar →</button>
+    </section>
+
+    <section id="pantalla-pregunta" hidden>
+      <div class="progreso">
+        <div class="progreso-barra-cont">
+          <div class="progreso-barra" id="progreso-barra"></div>
+        </div>
+        <span class="progreso-texto" id="progreso-texto">Pregunta 1 de 40</span>
+      </div>
+      <p class="pregunta-texto" id="pregunta-texto"></p>
+      <div class="escala-botones" id="escala-botones"></div>
+      <button class="btn-atras" id="btn-atras" onclick="irAtras()">← Atrás</button>
+    </section>
+
+    <section id="pantalla-resultados" hidden>
+      <h2 class="resultados-titulo" id="resultados-titulo">Tus resultados</h2>
+      <p style="font-size:.9rem;font-weight:700;color:#444;margin-bottom:16px">Recordá analizar estos resultados con tu orientador(a).</p>
+      <p style="color:#666;font-size:.9rem;margin-bottom:16px">
+        Este radar muestra qué áreas te interesan más. Seleccioná una carrera para ver cómo se compara con tu perfil.
+      </p>
+
+      <div class="radar-leyenda">
+        <span><span class="leyenda-dot leyenda-dot--usuario"></span>Tu perfil</span>
+        <span id="leyenda-carrera" hidden><span class="leyenda-dot leyenda-dot--carrera"></span><span id="leyenda-carrera-texto"></span></span>
+      </div>
+
+      <div class="radar-cont">
+        <canvas id="radar-canvas" aria-label="Gráfico de radar de resultados"></canvas>
+      </div>
+      <p style="font-size:.8rem;color:#888;margin-bottom:16px">Tocá el gráfico para ver la descripción de cada área.</p>
+
+      <p style="font-size:.8rem;color:#888;margin-bottom:6px;font-weight:700">Compatibilidad con cada carrera técnica — tocá una barra para comparar:</p>
+      <div class="ranking-chart-cont">
+        <canvas id="ranking-canvas" aria-label="Gráfico de compatibilidad con carreras técnicas"></canvas>
+      </div>
+
+      <p class="descripcion-match" id="descripcion-match" hidden></p>
+
+      <div class="acciones">
+        <button class="btn-accion btn-accion--primario" onclick="descargarRadar('radar-canvas','intereses')">⬇ Descargar imagen</button>
+        <button class="btn-accion btn-accion--secundario" onclick="_compartir()">🔗 Compartir resultado</button>
+        <button class="btn-accion btn-accion--secundario" onclick="location.href=location.pathname">↺ Repetir test</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../js/vendor/chart.min.js"></script>
+  <script src="../js/tests-data.js"></script>
+  <script src="../js/tests-engine.js"></script>
+  <script>
+    function _compartir() {
+      const url = location.origin + location.pathname + location.hash;
+      if (navigator.share) {
+        navigator.share({ title: 'Mis resultados del Test de Intereses — CTP Pococí', url });
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => alert('Enlace copiado al portapapeles ✓'));
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => iniciarTest(PREGUNTAS_INTERESES, 'intereses'));
+  </script>
+
+</body>
+</html>

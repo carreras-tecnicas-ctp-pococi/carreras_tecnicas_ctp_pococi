@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Runner — tests-engine.js</title>
+  <style>
+    body { font-family: monospace; padding: 16px; background: #f9f9f9; }
+    .pass { color: green; margin: 2px 0; }
+    .fail { color: red; font-weight: bold; margin: 2px 0; }
+    h2 { margin-top: 20px; font-size: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    #resumen { margin-top: 24px; font-size: 1.2rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+<h1>Test Runner — tests-engine.js</h1>
+<script src="../js/tests-data.js"></script>
+<script src="../js/tests-engine.js"></script>
+<script>
+let pasados = 0, fallados = 0;
+function assert(cond, msg) {
+  const p = document.createElement('p');
+  p.className = cond ? 'pass' : 'fail';
+  p.textContent = (cond ? '✅ ' : '❌ ') + msg;
+  document.body.appendChild(p);
+  cond ? pasados++ : fallados++;
+}
+
+// ── shuffle() ──────────────────────────────────────────────────────
+document.body.insertAdjacentHTML('beforeend', '<h2>shuffle()</h2>');
+const arr = [1,2,3,4,5,6,7,8,9,10];
+const s1 = shuffle([...arr]);
+assert(s1.length === arr.length, 'mantiene la longitud');
+assert([...s1].sort((a,b)=>a-b).join(',') === arr.join(','), 'preserva todos los elementos');
+let diferente = false;
+for (let i = 0; i < 5; i++) { if (JSON.stringify(shuffle([...arr])) !== JSON.stringify(arr)) { diferente = true; break; } }
+assert(diferente, 'produce un orden diferente al original (en al menos 1 de 5 intentos)');
+
+// ── calcularResultado() — intereses ────────────────────────────────
+document.body.insertAdjacentHTML('beforeend', '<h2>calcularResultado() — intereses (Likert 1-5)</h2>');
+const respI = {};
+PREGUNTAS_INTERESES.forEach(p => { respI[p.id] = p.area === 'tecnologia' ? 5 : 1; });
+const resI = calcularResultado(respI, 'intereses');
+assert(typeof resI === 'object', 'retorna un objeto');
+assert(AREAS.every(a => typeof resI[a.id] === 'number'), 'tiene un score numérico por cada área');
+assert(resI['tecnologia'] === 5, 'área con todos 5 → score 5');
+assert(resI['mecanica'] === 1, 'área con todos 1 → score 1');
+assert(Object.values(resI).every(v => v >= 0 && v <= 5), 'todos los scores en rango 0-5');
+
+// ── calcularResultado() — habilidades (escala 1-4 normaliza a 0-5) ─
+document.body.insertAdjacentHTML('beforeend', '<h2>calcularResultado() — habilidades (escala 1-4 → 0-5)</h2>');
+const respH = {};
+PREGUNTAS_HABILIDADES.forEach(p => { respH[p.id] = p.area === 'mecanica' ? 4 : 1; });
+const resH = calcularResultado(respH, 'habilidades');
+assert(resH['mecanica'] === 5, 'valor máximo (4) normaliza a 5.0');
+assert(Math.abs(resH['finanzas'] - 1.25) < 0.05, 'valor mínimo (1) normaliza a 1.25');
+assert(Object.values(resH).every(v => v >= 0 && v <= 5), 'todos en rango 0-5 tras normalización');
+
+// ── generarHashURL() / leerHashURL() ──────────────────────────────
+document.body.insertAdjacentHTML('beforeend', '<h2>generarHashURL() / leerHashURL()</h2>');
+const scoresTest = {};
+AREAS.forEach((a, i) => { scoresTest[a.id] = parseFloat((i * 0.5).toFixed(1)); });
+const hash = generarHashURL(scoresTest);
+assert(hash.startsWith('#r='), 'hash empieza con #r=');
+assert(hash.split('-').length === AREAS.length, 'hash tiene exactamente 9 valores');
+
+const hashOriginal = window.location.hash;
+window.location.hash = hash;
+const leido = leerHashURL();
+window.location.hash = hashOriginal;
+assert(leido !== null, 'hash válido retorna objeto (no null)');
+assert(leido && AREAS.every(a => typeof leido[a.id] === 'number'), 'objeto tiene score por cada área');
+assert(leido && Math.abs(leido['finanzas'] - scoresTest['finanzas']) < 0.05, 'valor de finanzas se preserva');
+
+window.location.hash = '#r=invalido-abc';
+assert(leerHashURL() === null, 'hash con texto inválido retorna null');
+window.location.hash = '#r=1.0-2.0';
+assert(leerHashURL() === null, 'hash con menos de 9 valores retorna null');
+window.location.hash = hashOriginal;
+
+// ── guardarResultado() / cargarResultado() ─────────────────────────
+document.body.insertAdjacentHTML('beforeend', '<h2>guardarResultado() / cargarResultado()</h2>');
+guardarResultado('intereses', scoresTest);
+const cargado = cargarResultado('intereses');
+assert(cargado !== null, 'carga resultado recién guardado');
+assert(cargado && typeof cargado.scores === 'object', 'tiene propiedad scores');
+assert(cargado && typeof cargado.fecha === 'string' && cargado.fecha.length === 10, 'tiene fecha con formato YYYY-MM-DD');
+assert(cargado && AREAS.every(a => cargado.scores[a.id] === scoresTest[a.id]), 'scores coinciden exactamente');
+localStorage.removeItem('ctp_intereses_resultado');
+
+localStorage.setItem('ctp_intereses_resultado', 'NO_ES_JSON{{{');
+assert(cargarResultado('intereses') === null, 'JSON corrupto retorna null sin crash');
+localStorage.removeItem('ctp_intereses_resultado');
+
+assert(cargarResultado('intereses') === null, 'clave ausente retorna null sin crash');
+
+// ── calcularCompatibilidad() ──────────────────────────────────────
+document.body.insertAdjacentHTML('beforeend', '<h2>calcularCompatibilidad()</h2>');
+const perfecto = {}, opuesto = {};
+AREAS.forEach(a => { perfecto[a.id] = 5; opuesto[a.id] = 0; });
+assert(calcularCompatibilidad(perfecto, perfecto) === 100, 'perfil idéntico → 100%');
+const compOpuesto = calcularCompatibilidad(perfecto, opuesto);
+assert(compOpuesto >= 0 && compOpuesto < 30, 'perfiles opuestos → baja compatibilidad');
+assert(calcularCompatibilidad(opuesto, opuesto) === 100, 'ambos en cero → 100% (idénticos)');
+
+// ── Resumen ───────────────────────────────────────────────────────
+const color = fallados === 0 ? 'green' : 'red';
+document.body.insertAdjacentHTML('beforeend',
+  `<p id="resumen" style="color:${color}">Resultado: ${pasados} ✅ pasados, ${fallados} ❌ fallados</p>`
+);
+</script>
+</body>
+</html>

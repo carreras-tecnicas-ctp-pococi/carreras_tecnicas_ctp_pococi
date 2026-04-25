@@ -397,3 +397,527 @@ body {
   margin-top: 10px;
   min-height: 20px;
 }
+
+/* ── BOTONES GENERALES ──────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #283593;
+}
+
+/* ── TESTS — ESTRUCTURA DE PÁGINA ──────────────────────────────── */
+.test-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.test-inicio {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.test-inicio h1 {
+  color: var(--blue);
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.test-inicio p {
+  color: #555;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+/* ── BARRA DE PROGRESO ──────────────────────────────────────────── */
+.progreso {
+  margin-bottom: 20px;
+}
+
+.progreso-barra-cont {
+  background: #e0e0e0;
+  border-radius: 4px;
+  height: 6px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+.progreso-barra {
+  background: var(--blue);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progreso-texto {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+  display: block;
+}
+
+/* ── PREGUNTA ───────────────────────────────────────────────────── */
+.pregunta-texto {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  min-height: 60px;
+}
+
+/* ── ESCALA DE BOTONES ──────────────────────────────────────────── */
+.escala-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.escala-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+
+.escala-btn:hover, .escala-btn:focus {
+  border-color: var(--blue);
+  background: #f0f4ff;
+  outline: none;
+}
+
+.escala-btn--activo {
+  border-color: var(--blue);
+  background: #e8ecff;
+  font-weight: 600;
+}
+
+.escala-emoji {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.escala-texto {
+  flex: 1;
+}
+
+/* ── BOTÓN ATRÁS ────────────────────────────────────────────────── */
+.btn-atras {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.btn-atras:disabled {
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+/* ── RESULTADOS ─────────────────────────────────────────────────── */
+.resultados-titulo {
+  color: var(--blue);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.radar-cont {
+  position: relative;
+  max-width: 380px;
+  margin: 0 auto 24px;
+}
+
+.radar-leyenda {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.radar-leyenda span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leyenda-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.leyenda-dot--usuario { background: var(--blue); }
+.leyenda-dot--carrera { background: var(--yellow); }
+
+/* ── CHIPS ──────────────────────────────────────────────────────── */
+.chips-cont {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1.5px solid #ddd;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+.chip--area {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.chip--area:hover {
+  background: #e8ecff;
+}
+
+.chip--carrera:hover {
+  border-color: var(--yellow);
+  background: #fff9e6;
+}
+
+.chip--activo {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: #222;
+  font-weight: 600;
+}
+
+/* ── DESCRIPCIÓN DE MATCH ───────────────────────────────────────── */
+.descripcion-match {
+  background: #fffbf0;
+  border-left: 3px solid var(--yellow);
+  padding: 12px 14px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* ── BOTONES DE ACCIÓN (resultados) ─────────────────────────────── */
+.acciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.btn-accion {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-accion--primario {
+  background: var(--blue);
+  color: white;
+}
+
+.btn-accion--secundario {
+  background: white;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+}
+
+/* ── MODAL DE ÁREA ──────────────────────────────────────────────── */
+.modal-area {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 200;
+}
+
+.modal-area[hidden] {
+  display: none;
+}
+
+.modal-area__contenido {
+  background: white;
+  width: 100%;
+  padding: 24px 20px 40px;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+}
+
+.modal-area__cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #888;
+  padding: 4px 8px;
+}
+
+.modal-area__contenido h3 {
+  color: var(--blue);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  padding-right: 32px;
+}
+
+.modal-area__contenido p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ── LANDING tests/index.html ───────────────────────────────────── */
+.tests-hero {
+  background: var(--blue);
+  border-bottom: 3px solid var(--yellow);
+  color: white;
+  padding: 32px 16px 24px;
+  text-align: center;
+}
+
+.tests-hero h1 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.tests-hero p {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+.tests-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.test-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--blue);
+}
+
+.test-card h2 {
+  color: var(--blue);
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.test-card p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.test-fecha {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.test-card-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ── SECCIÓN COMBINADA ──────────────────────────────────────────── */
+.combinado-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: var(--shadow);
+  max-width: 640px;
+  margin: 0 16px 24px;
+  border-top: 4px solid var(--yellow);
+}
+
+.combinado-section h2 {
+  color: var(--blue);
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* ── RANKING DE CARRERAS ────────────────────────────────────────── */
+.ranking {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.ranking-nombre {
+  min-width: 150px;
+  font-size: 0.9rem;
+}
+
+.ranking-barra-cont {
+  flex: 1;
+  background: #eee;
+  border-radius: 4px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.ranking-barra {
+  background: var(--yellow);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.ranking-pct {
+  font-size: 0.85rem;
+  color: #555;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── CTA EN HOMEPAGE ────────────────────────────────────────────── */
+.cta-tests {
+  background: var(--blue);
+  color: white;
+  padding: 28px 16px;
+  text-align: center;
+}
+
+.cta-tests h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.cta-tests p {
+  opacity: 0.85;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.cta-tests a {
+  display: inline-block;
+  background: var(--yellow);
+  color: #222;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+/* ── ENLACE HEADER ──────────────────────────────────────────────── */
+.nav-link-tests {
+  color: var(--yellow);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nav-link-tests:hover {
+  color: white;
+}
+
+/* ── INPUT DE NOMBRE ────────────────────────────────────────────── */
+.input-nombre {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.15rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #222;
+  transition: border-color 0.15s;
+}
+
+.input-nombre:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+/* ── TÍTULO PERSISTENTE DE TEST ─────────────────────────────────── */
+.test-titulo-pagina {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blue);
+  padding: 10px 0 12px;
+  margin-bottom: 4px;
+  border-bottom: 2px solid var(--yellow);
+}
+
+/* ── GRÁFICO DE RANKING DE CARRERAS ─────────────────────────────── */
+.ranking-chart-cont {
+  position: relative;
+  height: 380px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 500px) {
+  .tests-cards {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .test-card {
+    flex: 1;
+  }
+  .combinado-section {
+    margin: 0 auto 24px;
+  }
+}
