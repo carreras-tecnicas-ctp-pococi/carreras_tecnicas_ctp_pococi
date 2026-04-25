@@ -577,8 +577,8 @@ body {
   flex-shrink: 0;
 }
 
-.leyenda-dot--usuario { background: #1a237e; }
-.leyenda-dot--carrera { background: #d4a017; }
+.leyenda-dot--usuario { background: var(--blue); }
+.leyenda-dot--carrera { background: var(--yellow); }
 
 /* ── CHIPS ──────────────────────────────────────────────────────── */
 .chips-cont {
