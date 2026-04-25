@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Descubrí tus habilidades e intereses y encontrá la carrera técnica del CTP Pococí que va con vos.">
+  <title>Habilidades e Intereses — CTP Pococí</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo-area">
+      <img src="../logo.jpeg" alt="Logo CTP Pococí" width="36" height="36">
+      <div class="site-name">
+        CTP Pococí
+        <span>Ciencia · Virtud · Trabajo</span>
+      </div>
+    </div>
+    <a href="../index.html" class="back-link">← Inicio</a>
+  </header>
+
+  <div class="tests-hero">
+    <h1>Habilidades e Intereses</h1>
+    <p>Dos tests para ayudarte a encontrar la carrera técnica que va con vos.</p>
+  </div>
+
+  <div class="tests-cards">
+
+    <div class="test-card">
+      <h2>🎯 Test de Intereses</h2>
+      <p>Identificá qué actividades te gustan y descubrí qué carreras se alinean con tus intereses.</p>
+      <p><em>~8 minutos · 40 preguntas</em></p>
+      <div id="mini-intereses"></div>
+      <div class="test-card-btns" id="btns-intereses"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>💪 Test de Habilidades</h2>
+      <p>Evaluá tus habilidades y compará tu perfil con lo que cada carrera técnica requiere.</p>
+      <p><em>~9 minutos · 36 preguntas</em></p>
+      <div id="mini-habilidades"></div>
+      <div class="test-card-btns" id="btns-habilidades"></div>
+    </div>
+
+  </div>
+
+  <div class="combinado-section" id="combinado-section" hidden>
+    <h2>Tu perfil vocacional completo</h2>
+    <div class="radar-leyenda">
+      <span><span class="leyenda-dot leyenda-dot--usuario"></span>Intereses</span>
+      <span><span class="leyenda-dot leyenda-dot--carrera"></span>Habilidades</span>
+    </div>
+    <div class="radar-cont" style="max-width:340px">
+      <canvas id="radar-combinado" aria-label="Gráfico de radar combinado de intereses y habilidades"></canvas>
+    </div>
+    <h3 style="margin-top:20px;font-size:1rem;color:#444">Top 3 carreras más compatibles</h3>
+    <ul class="ranking" id="ranking-carreras"></ul>
+    <a href="intereses.html" id="btn-explorar" class="btn btn-primary" style="display:inline-block;margin-top:16px">
+      Explorar todas las carreras →
+    </a>
+  </div>
+
+  <script src="../js/vendor/chart.min.js"></script>
+  <script src="../js/tests-data.js"></script>
+  <script src="../js/tests-engine.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const resI = cargarResultado('intereses');
+      const resH = cargarResultado('habilidades');
+
+      // Tarjeta de intereses
+      const btnsI = document.getElementById('btns-intereses');
+      if (resI) {
+        document.getElementById('mini-intereses').innerHTML =
+          `<p class="test-fecha">Realizado el ${resI.fecha}</p>` +
+          `<canvas id="mini-radar-intereses" width="200" height="200" style="display:block;margin:0 auto 12px"></canvas>`;
+        mostrarRadar('mini-radar-intereses', resI.scores);
+        btnsI.innerHTML =
+          `<a href="intereses.html${generarHashURL(resI.scores)}" class="chip chip--area">Ver resultado</a>` +
+          `<a href="intereses.html" class="chip">Repetir</a>`;
+      } else {
+        btnsI.innerHTML = `<a href="intereses.html" class="btn btn-primary">Comenzar →</a>`;
+      }
+
+      // Tarjeta de habilidades
+      const btnsH = document.getElementById('btns-habilidades');
+      if (resH) {
+        document.getElementById('mini-habilidades').innerHTML =
+          `<p class="test-fecha">Realizado el ${resH.fecha}</p>` +
+          `<canvas id="mini-radar-habilidades" width="200" height="200" style="display:block;margin:0 auto 12px"></canvas>`;
+        mostrarRadar('mini-radar-habilidades', resH.scores);
+        btnsH.innerHTML =
+          `<a href="habilidades.html${generarHashURL(resH.scores)}" class="chip chip--area">Ver resultado</a>` +
+          `<a href="habilidades.html" class="chip">Repetir</a>`;
+      } else {
+        btnsH.innerHTML = `<a href="habilidades.html" class="btn btn-primary">Comenzar →</a>`;
+      }
+
+      // Sección combinada
+      if (resI && resH) {
+        const seccion = document.getElementById('combinado-section');
+        seccion.hidden = false;
+
+        mostrarRadar('radar-combinado', resI.scores, resH.scores, 'Intereses', 'Habilidades');
+
+        const ranking = CARRERAS
+          .map(c => ({ carrera: c, compat: calcularCompatibilidadCombinada(resI.scores, resH.scores, c.perfil) }))
+          .sort((a, b) => b.compat - a.compat)
+          .slice(0, 3);
+
+        const ul = document.getElementById('ranking-carreras');
+        ranking.forEach(({ carrera, compat }) => {
+          const li = document.createElement('li');
+          li.className = 'ranking-item';
+          li.innerHTML =
+            `<span class="ranking-nombre">${carrera.emoji} ${carrera.nombre}</span>` +
+            `<div class="ranking-barra-cont"><div class="ranking-barra" style="width:${compat}%"></div></div>` +
+            `<span class="ranking-pct">${compat}%</span>`;
+          ul.appendChild(li);
+        });
+
+        document.getElementById('btn-explorar').href = `intereses.html${generarHashURL(resI.scores)}`;
+      }
+    });
+  </script>
+
+</body>
+</html>
