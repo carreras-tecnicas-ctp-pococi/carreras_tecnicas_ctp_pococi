@@ -40,6 +40,8 @@ js/
   main.js             ← existente, sin cambios
   tests-engine.js     ← motor del quiz, radar chart, localStorage, compartir resultado
   tests-data.js       ← datos puros: preguntas, áreas, perfiles de carreras
+  vendor/
+    chart.min.js      ← Chart.js descargado localmente (sin CDN)
 
 css/
   styles.css          ← existente, extendido con clases para tests y radar
@@ -167,8 +169,7 @@ Cada carrera tiene un perfil de puntajes por área en escala **0–5**, definido
 
 ### Radar chart
 
-- Librería: **Chart.js** desde CDN
-- Si CDN falla: se muestra mensaje "No se pudo cargar el gráfico. Revisá tu conexión." — los puntajes numéricos por área se muestran en lista como fallback
+- Librería: **Chart.js** descargada y guardada localmente en `js/vendor/chart.min.js` — sin dependencia de CDN
 - 9 ejes (uno por área), escala 0–5
 - **Capa del usuario:** azul `--blue` (#1a237e), relleno semi-transparente (alpha 0.3)
 - **Capa de carrera seleccionada:** amarillo `--yellow` (#d4a017), relleno semi-transparente (alpha 0.3), superpuesta
@@ -264,7 +265,7 @@ Las 76 preguntas y los 12 perfiles de carrera se generan mediante agentes que le
 ## Restricciones
 
 - Sin backend, sin servidor — todo client-side
-- Chart.js es la única dependencia externa (CDN)
+- Chart.js guardado localmente en `js/vendor/chart.min.js` — sin dependencias externas
 - Mobile-first: botones de respuesta mínimo 44px de altura
 - Todo el texto en español, tuteo informal (vos)
 - Compatible con el patrón de archivos y convenciones del sitio actual
