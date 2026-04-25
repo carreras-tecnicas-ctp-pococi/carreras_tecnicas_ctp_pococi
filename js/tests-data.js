@@ -201,7 +201,7 @@ const CARRERAS = [
       "salud-seguridad":  2,
       "mecanica":         1
     },
-    descripcion_match: "Esta carrera es ideal si te apasionan las plantas, los animales y la conservación ambiental, ya que el área de Agro / Naturaleza es el núcleo de toda la formación. También tiene componentes de tecnología agrícola de precisión y de salud/seguridad aplicadas al trabajo en campo."
+    descripcion_match: "Esta carrera es ideal si te apasionan las plantas, los animales y la conservación ambiental, ya que el área de Agro / Naturaleza es el núcleo de toda la formación. También incorpora nociones de Agroindustria para el procesamiento básico de productos del campo, y de Tecnología agrícola de precisión para el manejo moderno de cultivos."
   },
   {
     id: "alimentos-bebidas",
@@ -297,13 +297,13 @@ const CARRERAS = [
       "agroindustria":    2,
       "gastronomia":      5,
       "finanzas":         2,
-      "administracion":   3,
+      "administracion":   4,
       "tecnologia":       1,
       "diseno":           1,
       "salud-seguridad":  1,
       "mecanica":         0
     },
-    descripcion_match: "La Gastronomía / Servicios es el núcleo de esta carrera, con producción culinaria profesional que va desde técnicas básicas hasta alta cocina, pastelería y chocolatería. La Administración / Oficina tiene relevancia significativa porque el perfil incluye dirección de cocina, control de costos y gestión de operaciones."
+    descripcion_match: "La Gastronomía / Servicios es el núcleo de esta carrera, con producción culinaria profesional que va desde técnicas básicas hasta alta cocina, pastelería y chocolatería. La Administración / Oficina tiene un peso alto porque el perfil incluye dirección de cocina, control de costos, gestión de operaciones y liderazgo de equipos de trabajo."
   },
   {
     id: "mecanica-general",
@@ -383,7 +383,7 @@ const CARRERAS = [
       "gastronomia":      0,
       "finanzas":         2,
       "administracion":   5,
-      "tecnologia":       2,
+      "tecnologia":       1,
       "diseno":           1,
       "salud-seguridad":  0,
       "mecanica":         0
