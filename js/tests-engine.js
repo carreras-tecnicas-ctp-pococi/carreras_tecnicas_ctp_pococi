@@ -66,9 +66,13 @@ function _b64dec(b64) {
   return decodeURIComponent(escape(atob(b64)));
 }
 
-function generarHashURL(scores, nombre) {
+function generarHashURL(scores, nombre, subscores) {
   const vals = AREAS.map(a => (scores[a.id] || 0).toFixed(1)).join('-');
-  return '#r=' + _b64enc((nombre || '') + '|' + vals);
+  let raw = (nombre || '') + '|' + vals;
+  if (subscores && Object.keys(subscores).length > 0) {
+    raw += '|' + SUBAREAS.map(s => (subscores[s.id] || 0).toFixed(1)).join('-');
+  }
+  return '#r=' + _b64enc(raw);
 }
 
 function leerHashURL() {
@@ -76,18 +80,33 @@ function leerHashURL() {
   if (!hash.startsWith('#r=')) return null;
   try {
     const raw = _b64dec(hash.slice(3));
-    const sep = raw.indexOf('|');
-    if (sep === -1) return null;
-    const nombre = raw.slice(0, sep) || null;
-    const partes = raw.slice(sep + 1).split('-');
-    if (partes.length !== AREAS.length) return null;
+    const segmentos = raw.split('|');
+    if (segmentos.length < 2) return null;
+    const nombre = segmentos[0] || null;
+
+    const mainParts = segmentos[1].split('-');
+    if (mainParts.length !== AREAS.length) return null;
     const scores = {};
     for (let i = 0; i < AREAS.length; i++) {
-      const v = parseFloat(partes[i]);
+      const v = parseFloat(mainParts[i]);
       if (isNaN(v) || v < 0 || v > 5) return null;
       scores[AREAS[i].id] = v;
     }
-    return { scores, nombre };
+
+    let subscores = null;
+    if (segmentos.length >= 3) {
+      const subParts = segmentos[2].split('-');
+      if (subParts.length === SUBAREAS.length) {
+        subscores = {};
+        for (let i = 0; i < SUBAREAS.length; i++) {
+          const v = parseFloat(subParts[i]);
+          if (isNaN(v) || v < 0 || v > 5) { subscores = null; break; }
+          subscores[SUBAREAS[i].id] = v;
+        }
+      }
+    }
+
+    return { scores, subscores, nombre };
   } catch (_) {
     return null;
   }
@@ -341,7 +360,7 @@ function iniciarTest(preguntas, tipo) {
   const hashData = leerHashURL();
   if (hashData) {
     _estado.nombre = hashData.nombre;
-    _mostrarResultados(hashData.scores, null);
+    _mostrarResultados(hashData.scores, hashData.subscores);
     return;
   }
   _mostrarPantalla('pantalla-inicio');
@@ -454,7 +473,7 @@ function _mostrarResultados(scores, subscores) {
 
   mostrarRadar('radar-canvas', scores);
   _mostrarBarrasCarreras('ranking-canvas', scores, subscores);
-  history.replaceState(null, '', generarHashURL(scores, _estado.nombre));
+  history.replaceState(null, '', generarHashURL(scores, _estado.nombre, subscores));
 }
 
 function _mostrarBarrasCarreras(canvasId, scores, subscores) {

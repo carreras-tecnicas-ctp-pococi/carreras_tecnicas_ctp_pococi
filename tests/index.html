@@ -77,7 +77,7 @@
           `<canvas id="mini-radar-intereses" width="200" height="200" style="display:block;margin:0 auto 12px"></canvas>`;
         mostrarRadar('mini-radar-intereses', resI.scores);
         btnsI.innerHTML =
-          `<a href="intereses.html${generarHashURL(resI.scores, resI.nombre)}" class="chip chip--area">Ver resultado</a>` +
+          `<a href="intereses.html${generarHashURL(resI.scores, resI.nombre, resI.subscores)}" class="chip chip--area">Ver resultado</a>` +
           `<a href="intereses.html" class="chip">Repetir</a>`;
       } else {
         btnsI.innerHTML = `<a href="intereses.html" class="btn btn-primary">Comenzar →</a>`;
@@ -91,7 +91,7 @@
           `<canvas id="mini-radar-habilidades" width="200" height="200" style="display:block;margin:0 auto 12px"></canvas>`;
         mostrarRadar('mini-radar-habilidades', resH.scores);
         btnsH.innerHTML =
-          `<a href="habilidades.html${generarHashURL(resH.scores, resH.nombre)}" class="chip chip--area">Ver resultado</a>` +
+          `<a href="habilidades.html${generarHashURL(resH.scores, resH.nombre, resH.subscores)}" class="chip chip--area">Ver resultado</a>` +
           `<a href="habilidades.html" class="chip">Repetir</a>`;
       } else {
         btnsH.innerHTML = `<a href="habilidades.html" class="btn btn-primary">Comenzar →</a>`;
@@ -120,7 +120,7 @@
           ul.appendChild(li);
         });
 
-        document.getElementById('btn-explorar').href = `intereses.html${generarHashURL(resI.scores, resI.nombre)}`;
+        document.getElementById('btn-explorar').href = `intereses.html${generarHashURL(resI.scores, resI.nombre, resI.subscores)}`;
       }
     });
   </script>
