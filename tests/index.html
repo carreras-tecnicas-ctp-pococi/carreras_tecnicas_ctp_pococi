@@ -30,7 +30,7 @@
     <div class="test-card">
       <h2>🎯 Test de Intereses</h2>
       <p>Identificá qué actividades te gustan y descubrí qué carreras se alinean con tus intereses.</p>
-      <p><em>~8 minutos · 40 preguntas</em></p>
+      <p><em>~10 minutos · 49 preguntas</em></p>
       <div id="mini-intereses"></div>
       <div class="test-card-btns" id="btns-intereses"></div>
     </div>
@@ -38,7 +38,7 @@
     <div class="test-card">
       <h2>💪 Test de Habilidades</h2>
       <p>Evaluá tus habilidades y compará tu perfil con lo que cada carrera técnica requiere.</p>
-      <p><em>~9 minutos · 36 preguntas</em></p>
+      <p><em>~12 minutos · 47 preguntas</em></p>
       <div id="mini-habilidades"></div>
       <div class="test-card-btns" id="btns-habilidades"></div>
     </div>
@@ -105,7 +105,7 @@
         mostrarRadar('radar-combinado', resI.scores, resH.scores, 'Intereses', 'Habilidades');
 
         const ranking = CARRERAS
-          .map(c => ({ carrera: c, compat: calcularCompatibilidadCombinada(resI.scores, resH.scores, c.perfil) }))
+          .map(c => ({ carrera: c, compat: calcularCompatibilidadCombinada(resI.scores, resH.scores, resI.subscores, resH.subscores, c) }))
           .sort((a, b) => b.compat - a.compat)
           .slice(0, 3);
 

@@ -53,6 +53,18 @@ const AREAS = [
 ];
 
 // ============================================================
+// SUB-ÁREAS (desgloses internos de áreas compartidas por varias carreras)
+// Cada sub-área pertenece a un área padre y comparte sus preguntas etiquetadas.
+// ============================================================
+
+const SUBAREAS = [
+  { id: "finanzas-contable", padre: "finanzas",       nombre: "Contabilidad" },
+  { id: "finanzas-banca",    padre: "finanzas",       nombre: "Banca" },
+  { id: "agro-produccion",   padre: "agro-naturaleza", nombre: "Producción" },
+  { id: "agro-ecosistema",   padre: "agro-naturaleza", nombre: "Ecosistema" },
+];
+
+// ============================================================
 // PREGUNTAS DE INTERESES (40 ítems)
 // Distribución: 5 preguntas en agro-naturaleza, gastronomia,
 // finanzas y tecnologia; 4 preguntas en las otras 5 áreas.
@@ -61,11 +73,11 @@ const AREAS = [
 
 const PREGUNTAS_INTERESES = [
   // --- agro-naturaleza (5) ---
-  { id: "i01", area: "agro-naturaleza", texto: "Sembrar y cuidar plantas en un huerto o jardín" },
-  { id: "i02", area: "agro-naturaleza", texto: "Observar animales y aprender sobre su comportamiento en la naturaleza" },
-  { id: "i03", area: "agro-naturaleza", texto: "Salir al campo a identificar suelos, plantas o fuentes de agua" },
-  { id: "i04", area: "agro-naturaleza", texto: "Participar en proyectos de reforestación o conservación ambiental" },
-  { id: "i05", area: "agro-naturaleza", texto: "Explorar cómo producir alimentos de manera respetuosa con el ambiente" },
+  { id: "i01", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Sembrar y cuidar plantas en un huerto o jardín" },
+  { id: "i02", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Observar animales y aprender sobre su comportamiento en la naturaleza" },
+  { id: "i03", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Salir al campo a identificar suelos, plantas o fuentes de agua" },
+  { id: "i04", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Participar en proyectos de reforestación o conservación ambiental" },
+  { id: "i05", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Explorar cómo producir alimentos de manera respetuosa con el ambiente" },
 
   // --- agroindustria (4) ---
   { id: "i06", area: "agroindustria", texto: "Aprender cómo se transforma la leche o la fruta en productos de supermercado" },
@@ -81,11 +93,11 @@ const PREGUNTAS_INTERESES = [
   { id: "i14", area: "gastronomia", texto: "Organizar la logística de un evento gastronómico o banquete" },
 
   // --- finanzas (5) ---
-  { id: "i15", area: "finanzas", texto: "Llevar el control de gastos e ingresos de un negocio o proyecto personal" },
-  { id: "i16", area: "finanzas", texto: "Entender cómo funcionan los bancos, préstamos e inversiones" },
-  { id: "i17", area: "finanzas", texto: "Resolver ejercicios de matemáticas con datos de empresas o mercados" },
-  { id: "i18", area: "finanzas", texto: "Ayudar a alguien a planificar su presupuesto o ahorros" },
-  { id: "i19", area: "finanzas", texto: "Seguir noticias económicas y entender cómo afectan a las personas" },
+  { id: "i15", area: "finanzas", subarea: "finanzas-contable", texto: "Llevar el control de gastos e ingresos de un negocio o proyecto personal" },
+  { id: "i16", area: "finanzas", subarea: "finanzas-banca",    texto: "Entender cómo funcionan los bancos, préstamos e inversiones" },
+  { id: "i17", area: "finanzas", subarea: "finanzas-contable", texto: "Resolver ejercicios de matemáticas con datos de empresas o mercados" },
+  { id: "i18", area: "finanzas", subarea: "finanzas-contable", texto: "Ayudar a alguien a planificar su presupuesto o ahorros" },
+  { id: "i19", area: "finanzas", subarea: "finanzas-banca",    texto: "Seguir noticias económicas y entender cómo afectan a las personas" },
 
   // --- administracion (4) ---
   { id: "i20", area: "administracion", texto: "Organizar documentos, archivos y correspondencia de manera ordenada" },
@@ -117,6 +129,23 @@ const PREGUNTAS_INTERESES = [
   { id: "i38", area: "mecanica", texto: "Usar herramientas manuales o eléctricas para reparar o construir algo" },
   { id: "i39", area: "mecanica", texto: "Diagnosticar por qué un vehículo o máquina falla y buscar la solución" },
   { id: "i40", area: "mecanica", texto: "Hacer mantenimiento preventivo de equipos para evitar que se dañen" },
+
+  // --- agro-naturaleza nuevas: agro-produccion (2) ---
+  { id: "i41", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Manejar animales bovinos, cerdos u ovejas en una finca" },
+  { id: "i42", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Usar drones o tecnología para el riego o la supervisión de cultivos" },
+
+  // --- agro-naturaleza nuevas: agro-ecosistema (3) ---
+  { id: "i43", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Cultivar alimentos sin usar pesticidas ni fertilizantes químicos" },
+  { id: "i44", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Diseñar un sistema de cultivo que imite los procesos naturales de un bosque o ecosistema" },
+  { id: "i45", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Aprender sobre plantas medicinales o nativas y su rol en el ecosistema agrícola" },
+
+  // --- finanzas nuevas: finanzas-contable (2) ---
+  { id: "i46", area: "finanzas", subarea: "finanzas-contable", texto: "Revisar y cuadrar los registros contables de una empresa al cierre del mes" },
+  { id: "i47", area: "finanzas", subarea: "finanzas-contable", texto: "Preparar la declaración de impuestos de un negocio siguiendo la normativa costarricense" },
+
+  // --- finanzas nuevas: finanzas-banca (2) ---
+  { id: "i48", area: "finanzas", subarea: "finanzas-banca", texto: "Asesorar a una persona sobre qué préstamo, seguro o inversión le conviene según su situación" },
+  { id: "i49", area: "finanzas", subarea: "finanzas-banca", texto: "Entender cómo funciona la bolsa de valores, los fondos de inversión y los certificados a plazo" },
 ];
 
 // ============================================================
@@ -126,10 +155,10 @@ const PREGUNTAS_INTERESES = [
 
 const PREGUNTAS_HABILIDADES = [
   // --- agro-naturaleza (4) ---
-  { id: "h01", area: "agro-naturaleza", texto: "Puedo identificar diferentes tipos de plantas, suelos o animales en un entorno natural" },
-  { id: "h02", area: "agro-naturaleza", texto: "Sé cómo planificar y ejecutar actividades de siembra o cuidado de cultivos" },
-  { id: "h03", area: "agro-naturaleza", texto: "Entiendo cómo las prácticas agrícolas pueden impactar positiva o negativamente el ambiente" },
-  { id: "h04", area: "agro-naturaleza", texto: "Puedo trabajar durante horas al aire libre en condiciones variables sin que eso me afecte" },
+  { id: "h01", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Puedo identificar diferentes tipos de plantas, suelos o animales en un entorno natural" },
+  { id: "h02", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Sé cómo planificar y ejecutar actividades de siembra o cuidado de cultivos" },
+  { id: "h03", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Entiendo cómo las prácticas agrícolas pueden impactar positiva o negativamente el ambiente" },
+  { id: "h04", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Puedo trabajar durante horas al aire libre en condiciones variables sin que eso me afecte" },
 
   // --- agroindustria (4) ---
   { id: "h05", area: "agroindustria", texto: "Puedo identificar si un proceso de producción de alimentos cumple con normas básicas de higiene" },
@@ -144,10 +173,10 @@ const PREGUNTAS_HABILIDADES = [
   { id: "h12", area: "gastronomia", texto: "Puedo calcular el costo de un platillo o menú y determinar un precio de venta razonable" },
 
   // --- finanzas (4) ---
-  { id: "h13", area: "finanzas", texto: "Puedo registrar ingresos y gastos en una hoja de cálculo o cuaderno contable sin cometer errores" },
-  { id: "h14", area: "finanzas", texto: "Sé cómo interpretar un estado de cuenta bancario e identificar movimientos inusuales" },
-  { id: "h15", area: "finanzas", texto: "Entiendo cómo funcionan los intereses sobre préstamos o ahorros y puedo hacer cálculos básicos" },
-  { id: "h16", area: "finanzas", texto: "Puedo elaborar un presupuesto mensual para una persona o pequeña empresa" },
+  { id: "h13", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo registrar ingresos y gastos en una hoja de cálculo o cuaderno contable sin cometer errores" },
+  { id: "h14", area: "finanzas", subarea: "finanzas-banca",    texto: "Sé cómo interpretar un estado de cuenta bancario e identificar movimientos inusuales" },
+  { id: "h15", area: "finanzas", subarea: "finanzas-banca",    texto: "Entiendo cómo funcionan los intereses sobre préstamos o ahorros y puedo hacer cálculos básicos" },
+  { id: "h16", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo elaborar un presupuesto mensual para una persona o pequeña empresa" },
 
   // --- administracion (4) ---
   { id: "h17", area: "administracion", texto: "Puedo redactar un documento formal (carta, informe, memorándum) con claridad y sin errores ortográficos" },
@@ -178,6 +207,25 @@ const PREGUNTAS_HABILIDADES = [
   { id: "h34", area: "mecanica", texto: "Sé cómo identificar síntomas de falla en un motor o sistema mecánico y proponer un diagnóstico" },
   { id: "h35", area: "mecanica", texto: "Entiendo cómo realizar el mantenimiento preventivo básico de un vehículo o máquina" },
   { id: "h36", area: "mecanica", texto: "Puedo leer un diagrama o manual técnico y seguir los pasos indicados para una reparación" },
+
+  // --- agro-naturaleza nuevas: agro-produccion (4) ---
+  { id: "h37", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo sembrar una parcela de pasto para la alimentación del ganado" },
+  { id: "h38", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo aprender a operar un tractor agrícola u otra maquinaria de campo" },
+  { id: "h39", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Sé cómo producir plantas en campo abierto o en sistemas de hidroponía" },
+  { id: "h40", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo gestionar la venta de productos agrícolas que se producen en una finca" },
+
+  // --- agro-naturaleza nuevas: agro-ecosistema (3) ---
+  { id: "h41", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Puedo preparar abonos orgánicos o compost para mejorar la salud del suelo de manera natural" },
+  { id: "h42", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Puedo identificar qué plantas nativas o silvestres benefician a los cultivos y al ecosistema" },
+  { id: "h43", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Entiendo cómo manejar plagas o enfermedades en cultivos sin depender de productos químicos" },
+
+  // --- finanzas nuevas: finanzas-contable (2) ---
+  { id: "h44", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo preparar un estado de resultados o balance general básico para una empresa" },
+  { id: "h45", area: "finanzas", subarea: "finanzas-contable", texto: "Entiendo cómo aplicar la legislación tributaria al registrar las transacciones de un negocio" },
+
+  // --- finanzas nuevas: finanzas-banca (2) ---
+  { id: "h46", area: "finanzas", subarea: "finanzas-banca", texto: "Puedo explicarle a un cliente las condiciones de un crédito: tasa de interés, plazo y cuota mensual" },
+  { id: "h47", area: "finanzas", subarea: "finanzas-banca", texto: "Sé cómo evaluar si una persona califica para un préstamo según sus ingresos y deudas" },
 ];
 
 // ============================================================
@@ -200,6 +248,10 @@ const CARRERAS = [
       "diseno":           0,
       "salud-seguridad":  2,
       "mecanica":         1
+    },
+    perfilSubareas: {
+      "agro-produccion": 2,
+      "agro-ecosistema": 5,
     },
     descripcion_match: "Esta carrera es ideal si te apasionan las plantas, los animales y la conservación ambiental, ya que el área de Agro / Naturaleza es el núcleo de toda la formación. También incorpora nociones de Agroindustria para el procesamiento básico de productos del campo, y de Tecnología agrícola de precisión para el manejo moderno de cultivos."
   },
@@ -235,6 +287,10 @@ const CARRERAS = [
       "salud-seguridad":  0,
       "mecanica":         0
     },
+    perfilSubareas: {
+      "finanzas-contable": 2,
+      "finanzas-banca":    5,
+    },
     descripcion_match: "Las Finanzas son el corazón de esta carrera: banca, mercado financiero, seguros y gestión de pensiones. La Administración / Oficina ocupa un segundo lugar relevante porque el técnico también desarrolla habilidades en servicio al cliente, recursos humanos y gestión empresarial."
   },
   {
@@ -268,6 +324,10 @@ const CARRERAS = [
       "diseno":           0,
       "salud-seguridad":  0,
       "mecanica":         0
+    },
+    perfilSubareas: {
+      "finanzas-contable": 5,
+      "finanzas-banca":    2,
     },
     descripcion_match: "Las Finanzas son el eje principal de esta especialidad, cubriendo contabilidad básica y avanzada, matemática financiera y legislación fiscal. La Administración / Oficina tiene un peso alto porque también se abarca recursos humanos, administración empresarial y emprendimiento."
   },
@@ -353,6 +413,10 @@ const CARRERAS = [
       "diseno":           0,
       "salud-seguridad":  1,
       "mecanica":         1
+    },
+    perfilSubareas: {
+      "agro-produccion": 5,
+      "agro-ecosistema": 2,
     },
     descripcion_match: "Agro / Naturaleza es el núcleo de esta carrera, con trabajo práctico en producción animal, cultivos frutícolas y hortícolas, y manejo de suelos. La Tecnología / Informática tiene relevancia secundaria porque el perfil incluye agricultura de precisión con drones, sensores, GPS y herramientas digitales de gestión."
   },

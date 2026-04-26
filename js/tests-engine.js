@@ -8,6 +8,7 @@ let _estado = {
   indice: 0,
   tipo: null,
   nombre: null,
+  subscores: null,
 };
 
 // ─── Funciones puras ───────────────────────────────────────────────
@@ -24,12 +25,22 @@ function shuffle(arr) {
 function calcularResultado(respuestas, tipo) {
   const factor = tipo === 'habilidades' ? (5 / 4) : 1;
   const sumas = {}, conteos = {};
+  const sumasSub = {}, conteosSub = {};
+
   AREAS.forEach(a => { sumas[a.id] = 0; conteos[a.id] = 0; });
+  SUBAREAS.forEach(s => { sumasSub[s.id] = 0; conteosSub[s.id] = 0; });
 
   const preguntas = tipo === 'intereses' ? PREGUNTAS_INTERESES : PREGUNTAS_HABILIDADES;
   Object.entries(respuestas).forEach(([id, valor]) => {
     const p = preguntas.find(q => q.id === id);
-    if (p) { sumas[p.area] += valor; conteos[p.area]++; }
+    if (p) {
+      sumas[p.area] += valor;
+      conteos[p.area]++;
+      if (p.subarea) {
+        sumasSub[p.subarea] += valor;
+        conteosSub[p.subarea]++;
+      }
+    }
   });
 
   const scores = {};
@@ -37,7 +48,14 @@ function calcularResultado(respuestas, tipo) {
     const raw = conteos[a.id] > 0 ? (sumas[a.id] / conteos[a.id]) * factor : 0;
     scores[a.id] = Math.round(Math.min(raw, 5) * 10) / 10;
   });
-  return scores;
+
+  const subscores = {};
+  SUBAREAS.forEach(s => {
+    const raw = conteosSub[s.id] > 0 ? (sumasSub[s.id] / conteosSub[s.id]) * factor : 0;
+    subscores[s.id] = Math.round(Math.min(raw, 5) * 10) / 10;
+  });
+
+  return { scores, subscores };
 }
 
 function _b64enc(str) {
@@ -75,11 +93,12 @@ function leerHashURL() {
   }
 }
 
-function guardarResultado(tipo, scores, nombre) {
+function guardarResultado(tipo, scores, subscores, nombre) {
   try {
     const clave = tipo === 'intereses' ? 'ctp_intereses_resultado' : 'ctp_habilidades_resultado';
     localStorage.setItem(clave, JSON.stringify({
       scores,
+      subscores: subscores || {},
       nombre: nombre || null,
       fecha: new Date().toISOString().slice(0, 10),
     }));
@@ -93,27 +112,48 @@ function cargarResultado(tipo) {
     if (!raw) return null;
     const data = JSON.parse(raw);
     if (!data || data.scores === null || typeof data.scores !== 'object' || !data.fecha) return null;
+    if (!data.subscores || typeof data.subscores !== 'object') data.subscores = {};
     return data;
   } catch (_) {
     return null;
   }
 }
 
-function calcularCompatibilidad(scoresUsuario, perfilCarrera) {
+function calcularCompatibilidad(scoresUsuario, subscoresUsuario, carrera) {
+  const perfil = carrera.perfil || carrera;
+  const perfilSubareas = carrera.perfilSubareas || null;
+
   let sumMatch = 0, sumMax = 0;
   AREAS.forEach(a => {
-    const req = perfilCarrera[a.id] || 0;
-    const usr = scoresUsuario[a.id] || 0;
-    if (req > 0) {
-      sumMatch += Math.min(usr, req);
+    const req = perfil[a.id] || 0;
+    if (req === 0) return;
+
+    const subareasDeEstaArea = SUBAREAS.filter(s => s.padre === a.id);
+    const usarSubareas = perfilSubareas && subscoresUsuario &&
+      Object.keys(subscoresUsuario).length > 0 &&
+      subareasDeEstaArea.some(s => s.id in perfilSubareas);
+
+    if (usarSubareas) {
+      subareasDeEstaArea.forEach(s => {
+        const reqSub = perfilSubareas[s.id] || 0;
+        if (reqSub > 0) {
+          sumMatch += Math.min(subscoresUsuario[s.id] || 0, reqSub);
+          sumMax += reqSub;
+        }
+      });
+    } else {
+      sumMatch += Math.min(scoresUsuario[a.id] || 0, req);
       sumMax += req;
     }
   });
   return sumMax === 0 ? 0 : Math.round((sumMatch / sumMax) * 100);
 }
 
-function calcularCompatibilidadCombinada(scoresI, scoresH, perfil) {
-  return Math.round((calcularCompatibilidad(scoresI, perfil) + calcularCompatibilidad(scoresH, perfil)) / 2);
+function calcularCompatibilidadCombinada(scoresI, scoresH, subscoresI, subscoresH, carrera) {
+  return Math.round(
+    (calcularCompatibilidad(scoresI, subscoresI, carrera) +
+     calcularCompatibilidad(scoresH, subscoresH, carrera)) / 2
+  );
 }
 
 // ─── Radar ─────────────────────────────────────────────────────────
@@ -296,12 +336,12 @@ function descargarRadar(radarCanvasId, tipo) {
 // ─── UI del Quiz ───────────────────────────────────────────────────
 
 function iniciarTest(preguntas, tipo) {
-  _estado = { preguntas: shuffle(preguntas), respuestas: {}, indice: 0, tipo };
+  _estado = { preguntas: shuffle(preguntas), respuestas: {}, indice: 0, tipo, nombre: null, subscores: null };
 
   const hashData = leerHashURL();
   if (hashData) {
     _estado.nombre = hashData.nombre;
-    _mostrarResultados(hashData.scores);
+    _mostrarResultados(hashData.scores, null);
     return;
   }
   _mostrarPantalla('pantalla-inicio');
@@ -388,15 +428,16 @@ function _responder(idPregunta, valor) {
   _estado.indice++;
 
   if (_estado.indice >= _estado.preguntas.length) {
-    const scores = calcularResultado(_estado.respuestas, _estado.tipo);
-    guardarResultado(_estado.tipo, scores, _estado.nombre);
-    _mostrarResultados(scores);
+    const { scores, subscores } = calcularResultado(_estado.respuestas, _estado.tipo);
+    guardarResultado(_estado.tipo, scores, subscores, _estado.nombre);
+    _mostrarResultados(scores, subscores);
   } else {
     _renderPregunta();
   }
 }
 
-function _mostrarResultados(scores) {
+function _mostrarResultados(scores, subscores) {
+  _estado.subscores = subscores || null;
   _mostrarPantalla('pantalla-resultados');
   window.scrollTo(0, 0);
 
@@ -412,11 +453,11 @@ function _mostrarResultados(scores) {
   }
 
   mostrarRadar('radar-canvas', scores);
-  _mostrarBarrasCarreras('ranking-canvas', scores);
+  _mostrarBarrasCarreras('ranking-canvas', scores, subscores);
   history.replaceState(null, '', generarHashURL(scores, _estado.nombre));
 }
 
-function _mostrarBarrasCarreras(canvasId, scores) {
+function _mostrarBarrasCarreras(canvasId, scores, subscores) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
@@ -425,10 +466,12 @@ function _mostrarBarrasCarreras(canvasId, scores) {
     _charts.delete(canvasId);
   }
 
+  const subDisponibles = subscores && Object.keys(subscores).length > 0;
+
   const ranking = CARRERAS.map(c => ({
     carrera: c,
     label: _abreviarNombre(c),
-    pct: calcularCompatibilidad(scores, c.perfil),
+    pct: calcularCompatibilidad(scores, subscores, c),
   })).sort((a, b) => b.pct - a.pct);
 
   const colorBase = 'rgba(26,35,126,0.6)';
@@ -486,11 +529,13 @@ function _mostrarBarrasCarreras(canvasId, scores) {
         const leyenda = document.getElementById('leyenda-carrera');
         const leyendaTexto = document.getElementById('leyenda-carrera-texto');
         const desc = document.getElementById('descripcion-match');
+        const subEl = document.getElementById('sub-scores');
         if (selectedIdx === idx) {
           selectedIdx = null;
           mostrarRadar('radar-canvas', scores);
           if (leyenda) leyenda.hidden = true;
           if (desc) desc.hidden = true;
+          if (subEl) subEl.hidden = true;
         } else {
           selectedIdx = idx;
           colors[idx] = colorActivo;
@@ -498,6 +543,17 @@ function _mostrarBarrasCarreras(canvasId, scores) {
           if (leyenda) leyenda.hidden = false;
           if (leyendaTexto) leyendaTexto.textContent = `${carrera.nombre} · ${pct}%`;
           if (desc) { desc.textContent = carrera.descripcion_match; desc.hidden = false; }
+          if (subEl) {
+            if (subDisponibles && carrera.perfilSubareas) {
+              const partes = SUBAREAS
+                .filter(s => s.id in carrera.perfilSubareas)
+                .map(s => `${s.nombre}: ${(subscores[s.id] || 0).toFixed(1)}`);
+              subEl.textContent = 'Sub-áreas → ' + partes.join(' | ');
+              subEl.hidden = false;
+            } else {
+              subEl.hidden = true;
+            }
+          }
         }
         chart.data.datasets[0].backgroundColor = colors;
         chart.update();
@@ -547,12 +603,38 @@ function _mostrarModalArea(area) {
         '<button class="modal-area__cerrar" onclick="cerrarModalArea()" aria-label="Cerrar">✕</button>' +
         '<h3 id="modal-area-nombre"></h3>' +
         '<p id="modal-area-desc"></p>' +
+        '<div id="modal-area-subscores" hidden></div>' +
       '</div>';
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if (e.target === modal) cerrarModalArea(); });
   }
   document.getElementById('modal-area-nombre').textContent = area.nombre;
   document.getElementById('modal-area-desc').textContent = area.descripcion;
+
+  const subEl = document.getElementById('modal-area-subscores');
+  const subareasDeEstaArea = SUBAREAS.filter(s => s.padre === area.id);
+  const subscores = _estado.subscores;
+
+  if (subEl) {
+    if (subareasDeEstaArea.length > 0 && subscores && Object.keys(subscores).length > 0) {
+      subEl.innerHTML = '<p class="modal-area__sub-titulo">Tu puntaje detallado</p>' +
+        subareasDeEstaArea.map(s => {
+          const score = subscores[s.id] || 0;
+          const pct = Math.round((score / 5) * 100);
+          return '<div class="modal-area__sub-item">' +
+            `<span class="modal-area__sub-nombre">${s.nombre}</span>` +
+            '<div class="modal-area__sub-barra-cont">' +
+              `<div class="modal-area__sub-barra" style="width:${pct}%"></div>` +
+            '</div>' +
+            `<span class="modal-area__sub-score">${score.toFixed(1)}</span>` +
+          '</div>';
+        }).join('');
+      subEl.hidden = false;
+    } else {
+      subEl.hidden = true;
+    }
+  }
+
   modal.hidden = false;
 }
 

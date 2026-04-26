@@ -710,6 +710,63 @@ body {
   line-height: 1.6;
 }
 
+.modal-area__sub-titulo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.modal-area__sub-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.modal-area__sub-nombre {
+  font-size: 0.85rem;
+  color: #444;
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.modal-area__sub-barra-cont {
+  flex: 1;
+  height: 8px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.modal-area__sub-barra {
+  height: 100%;
+  background: var(--yellow);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.modal-area__sub-score {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #333;
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.descripcion-match--sub {
+  background: #f0f4ff;
+  border-left-color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: -12px;
+}
+
 /* ── LANDING tests/index.html ───────────────────────────────────── */
 .tests-hero {
   background: var(--blue);
