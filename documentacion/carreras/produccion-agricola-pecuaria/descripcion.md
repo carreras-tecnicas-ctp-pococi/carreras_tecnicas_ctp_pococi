@@ -7,10 +7,10 @@ Formación de técnicos medios con conocimientos en agricultura sostenible y de 
 
 ## Habilidades Requeridas
 - Interés en el trabajo con animales y cultivos
-- Disposición para actividades prácticas en campo
 - Habilidad para el uso de tecnologías agrícolas (drones, GPS, sensores)
 - Gusto por las ciencias naturales y biológicas
-- Capacidad para trabajo físico al aire libre
+- Trabajo en el campo con animales y plantas
+- Trabajo en equipo
 - Interés en emprendimiento e innovación agropecuaria
 
 ---
