@@ -25,14 +25,13 @@ No build, lint, or test commands exist.
 - `carreras/[slug].html` — Individual career detail pages (one per career)
 - `css/styles.css` — All styles (single file, CSS custom properties)
 - `js/main.js` — Single `compartir()` function (Web Share API with clipboard fallback)
-- `documentacion/carreras/[slug]/descripcion.md` — Source content for each career (not auto-generated; HTML is manually maintained)
+- `documentacion/documentos_originales/` — Original PDF brochures for each career
 - `logo.jpeg` — Institutional logo
 
 ### Adding a New Career
 
-1. Create `documentacion/carreras/[slug]/descripcion.md` with sections: `## Descripción General`, `## Habilidades Requeridas`, `## Perfil de Salida`, `## Plan de Estudio`, `## Retos a Enfrentar`
-2. Create `carreras/[slug].html` by copying an existing career page and updating content
-3. Add a career card to `index.html` linking to the new page
+1. Create `carreras/[slug].html` by copying an existing career page and updating content
+2. Add a career card to `index.html` linking to the new page
 
 ### Design Tokens (CSS Variables)
 
