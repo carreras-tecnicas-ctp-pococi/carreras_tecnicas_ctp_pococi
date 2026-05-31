@@ -156,12 +156,12 @@ function calcularCompatibilidad(scoresUsuario, subscoresUsuario, carrera) {
       subareasDeEstaArea.forEach(s => {
         const reqSub = perfilSubareas[s.id] || 0;
         if (reqSub > 0) {
-          sumMatch += Math.min(subscoresUsuario[s.id] || 0, reqSub);
+          sumMatch += ((subscoresUsuario[s.id] || 0) / 5) * reqSub;
           sumMax += reqSub;
         }
       });
     } else {
-      sumMatch += Math.min(scoresUsuario[a.id] || 0, req);
+      sumMatch += ((scoresUsuario[a.id] || 0) / 5) * req;
       sumMax += req;
     }
   });
