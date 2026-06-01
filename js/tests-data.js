@@ -130,9 +130,11 @@ const PREGUNTAS_INTERESES = [
   { id: "i39", area: "mecanica", texto: "Diagnosticar por qué un vehículo o máquina falla y buscar la solución" },
   { id: "i40", area: "mecanica", texto: "Hacer mantenimiento preventivo de equipos para evitar que se dañen" },
 
-  // --- agro-naturaleza nuevas: agro-produccion (2) ---
+  // --- agro-naturaleza nuevas: agro-produccion (4) ---
   { id: "i41", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Manejar animales bovinos, cerdos u ovejas en una finca" },
   { id: "i42", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Usar drones o tecnología para el riego o la supervisión de cultivos" },
+  { id: "i50", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Criar animales de granja con el objetivo de producir leche, huevos o carne para venta" },
+  { id: "i51", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Aprender sobre la alimentación y el manejo sanitario del ganado bovino, porcino o avícola" },
 
   // --- agro-naturaleza nuevas: agro-ecosistema (3) ---
   { id: "i43", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Cultivar alimentos sin usar pesticidas ni fertilizantes químicos" },
@@ -208,11 +210,13 @@ const PREGUNTAS_HABILIDADES = [
   { id: "h35", area: "mecanica", texto: "Sé que los vehículos y máquinas necesitan revisiones periódicas (aceite, llantas, frenos) para no dañarse" },
   { id: "h36", area: "mecanica", texto: "Puedo seguir instrucciones escritas paso a paso para armar o reparar algo (como armar un mueble siguiendo el manual)" },
 
-  // --- agro-naturaleza nuevas: agro-produccion (4) ---
+  // --- agro-naturaleza nuevas: agro-produccion (6) ---
   { id: "h37", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He sembrado alguna planta en maceta o patio y la he cuidado hasta que creció" },
   { id: "h38", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Me llama la atención aprender a manejar maquinaria de campo como tractores o motosierras" },
   { id: "h39", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He cuidado o ayudado a cuidar animales de granja (gallinas, cerdos, vacas, truchas) en casa o en una finca" },
   { id: "h40", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He vendido o ayudado a vender frutas, verduras u otros productos de la finca o huerto familiar en un mercado o feria" },
+  { id: "h48", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo reconocer cuándo un animal de granja se ve enfermo o actúa diferente al resto del grupo" },
+  { id: "h49", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo distinguir las necesidades básicas de alimentación y espacio de distintos animales de granja" },
 
   // --- agro-naturaleza nuevas: agro-ecosistema (3) ---
   { id: "h41", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "He ayudado a sembrar plantas o cuidar un jardín/huerto en casa, en la escuela o en mi comunidad" },
