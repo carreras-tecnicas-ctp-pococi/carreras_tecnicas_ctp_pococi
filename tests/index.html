@@ -56,6 +56,10 @@
     </div>
     <h3 style="margin-top:20px;font-size:1rem;color:#444">Top 3 carreras más compatibles</h3>
     <ul class="ranking" id="ranking-carreras"></ul>
+    <div id="ranking-extra-cont" class="ranking-extra-cont" hidden>
+      <ul class="ranking" id="ranking-carreras-extra"></ul>
+    </div>
+    <button id="btn-ver-todas" class="btn-ver-todas" type="button">Ver todas las carreras ▾</button>
     <a href="intereses.html" id="btn-explorar" class="btn btn-primary" style="display:inline-block;margin-top:16px">
       Explorar todas las carreras →
     </a>
@@ -104,20 +108,32 @@
 
         mostrarRadar('radar-combinado', resI.scores, resH.scores, 'Intereses', 'Habilidades');
 
-        const ranking = CARRERAS
+        const todasOrdenadas = CARRERAS
           .map(c => ({ carrera: c, compat: calcularCompatibilidadCombinada(resI.scores, resH.scores, resI.subscores, resH.subscores, c) }))
-          .sort((a, b) => b.compat - a.compat)
-          .slice(0, 3);
+          .sort((a, b) => b.compat - a.compat);
 
-        const ul = document.getElementById('ranking-carreras');
-        ranking.forEach(({ carrera, compat }) => {
+        function crearItem({ carrera, compat }) {
           const li = document.createElement('li');
           li.className = 'ranking-item';
           li.innerHTML =
-            `<span class="ranking-nombre">${carrera.emoji} ${carrera.nombre}</span>` +
+            `<span class="ranking-nombre" title="${carrera.nombre}" data-tooltip="${carrera.nombre}" tabindex="0">${carrera.emoji} ${carrera.nombre}</span>` +
             `<div class="ranking-barra-cont"><div class="ranking-barra" style="width:${compat}%"></div></div>` +
             `<span class="ranking-pct">${compat}%</span>`;
-          ul.appendChild(li);
+          return li;
+        }
+
+        const ul = document.getElementById('ranking-carreras');
+        todasOrdenadas.slice(0, 3).forEach(item => ul.appendChild(crearItem(item)));
+
+        const ulExtra = document.getElementById('ranking-carreras-extra');
+        todasOrdenadas.slice(3).forEach(item => ulExtra.appendChild(crearItem(item)));
+
+        const btnVerTodas = document.getElementById('btn-ver-todas');
+        const extraCont = document.getElementById('ranking-extra-cont');
+        btnVerTodas.addEventListener('click', () => {
+          const abierto = !extraCont.hidden;
+          extraCont.hidden = abierto;
+          btnVerTodas.textContent = abierto ? 'Ver todas las carreras ▾' : 'Ver menos ▴';
         });
 
         document.getElementById('btn-explorar').href = `intereses.html${generarHashURL(resI.scores, resI.nombre, resI.subscores)}`;
