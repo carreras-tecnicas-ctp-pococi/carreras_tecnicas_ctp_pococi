@@ -258,7 +258,7 @@ const CARRERAS = [
   {
     id: "alimentos-bebidas",
     nombre: "Organización de Operaciones y Servicios de Alimentos y Bebidas",
-    emoji: "🍽️",
+    emoji: "🍴",
     perfil: {
       "agro-naturaleza":  0,
       "agroindustria":    1,
@@ -351,7 +351,7 @@ const CARRERAS = [
   {
     id: "gerencia-produccion-cocina",
     nombre: "Gerencia y Producción en Cocina",
-    emoji: "👨‍🍳",
+    emoji: "🍳",
     perfil: {
       "agro-naturaleza":  0,
       "agroindustria":    2,
