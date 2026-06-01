@@ -155,77 +155,77 @@ const PREGUNTAS_INTERESES = [
 
 const PREGUNTAS_HABILIDADES = [
   // --- agro-naturaleza (4) ---
-  { id: "h01", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Puedo identificar diferentes tipos de plantas, suelos o animales en un entorno natural" },
-  { id: "h02", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Sé cómo planificar y ejecutar actividades de siembra o cuidado de cultivos" },
-  { id: "h03", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Entiendo cómo las prácticas agrícolas pueden impactar positiva o negativamente el ambiente" },
+  { id: "h01", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Me es fácil reconocer plantas, pájaros o insectos cuando salgo al campo, jardín o parque" },
+  { id: "h02", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "He participado en actividades de siembra o cosecha en un patio, jardín o finca, aunque sea una vez" },
+  { id: "h03", area: "agro-naturaleza", subarea: "agro-ecosistema",  texto: "Me preocupa saber cómo acciones cotidianas (tirar basura, usar agroquímicos) afectan el suelo y el agua" },
   { id: "h04", area: "agro-naturaleza", subarea: "agro-produccion",  texto: "Puedo trabajar durante horas al aire libre en condiciones variables sin que eso me afecte" },
 
   // --- agroindustria (4) ---
-  { id: "h05", area: "agroindustria", texto: "Puedo identificar si un proceso de producción de alimentos cumple con normas básicas de higiene" },
-  { id: "h06", area: "agroindustria", texto: "Sé cómo registrar observaciones y resultados de manera precisa en una bitácora o formulario" },
-  { id: "h07", area: "agroindustria", texto: "Entiendo cómo se aplican controles de calidad en una línea de producción industrial" },
-  { id: "h08", area: "agroindustria", texto: "Puedo seguir protocolos estrictos de inocuidad y seguridad en un ambiente de laboratorio o planta" },
+  { id: "h05", area: "agroindustria", texto: "En la cocina de mi casa, siempre me aseguro de que los alimentos estén limpios y bien preparados" },
+  { id: "h06", area: "agroindustria", texto: "Cuando hago un experimento o proyecto de ciencias, anoto todo con cuidado para no perder ningún dato" },
+  { id: "h07", area: "agroindustria", texto: "Noto cuando algo no está bien hecho o le falta calidad a un producto que compro o uso" },
+  { id: "h08", area: "agroindustria", texto: "Puedo seguir instrucciones paso a paso, aunque sean largas y detalladas, sin saltarme ninguna" },
 
   // --- gastronomia (4) ---
   { id: "h09", area: "gastronomia", texto: "Puedo seguir una receta paso a paso y ajustar cantidades de ingredientes según la porción requerida" },
-  { id: "h10", area: "gastronomia", texto: "Sé cómo atender a un cliente en un espacio de comida o servicio de manera amable y profesional" },
-  { id: "h11", area: "gastronomia", texto: "Entiendo cómo organizar los tiempos y el espacio en una cocina para que el servicio funcione bien" },
-  { id: "h12", area: "gastronomia", texto: "Puedo calcular el costo de un platillo o menú y determinar un precio de venta razonable" },
+  { id: "h10", area: "gastronomia", texto: "En reuniones familiares o eventos, soy de los que ayudan a atender a los invitados con amabilidad" },
+  { id: "h11", area: "gastronomia", texto: "Puedo ayudar a preparar una comida en casa, calculando cuándo poner cada cosa para que todo esté listo al mismo tiempo" },
+  { id: "h12", area: "gastronomia", texto: "Cuando voy al supermercado, puedo calcular cuánto me cuesta lo que compro y si el dinero me alcanza" },
 
   // --- finanzas (4) ---
-  { id: "h13", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo registrar ingresos y gastos en una hoja de cálculo o cuaderno contable sin cometer errores" },
-  { id: "h14", area: "finanzas", subarea: "finanzas-banca",    texto: "Sé cómo interpretar un estado de cuenta bancario e identificar movimientos inusuales" },
-  { id: "h15", area: "finanzas", subarea: "finanzas-banca",    texto: "Entiendo cómo funcionan los intereses sobre préstamos o ahorros y puedo hacer cálculos básicos" },
-  { id: "h16", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo elaborar un presupuesto mensual para una persona o pequeña empresa" },
+  { id: "h13", area: "finanzas", subarea: "finanzas-contable", texto: "Llevo un registro (aunque sea en un cuaderno o en mi cabeza) de en qué gasto mi plata" },
+  { id: "h14", area: "finanzas", subarea: "finanzas-banca",    texto: "Cuando reviso un recibo o factura, me fijo en los números y noto si algo no cuadra" },
+  { id: "h15", area: "finanzas", subarea: "finanzas-banca",    texto: "Entiendo la diferencia entre pagar de contado y a plazos, y sé que a plazos se termina pagando más" },
+  { id: "h16", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo hacer un presupuesto sencillo para una compra o evento (una fiesta, un regalo grupal)" },
 
   // --- administracion (4) ---
-  { id: "h17", area: "administracion", texto: "Puedo redactar un documento formal (carta, informe, memorándum) con claridad y sin errores ortográficos" },
-  { id: "h18", area: "administracion", texto: "Sé cómo organizar archivos físicos o digitales para que cualquier persona pueda encontrar un documento fácilmente" },
-  { id: "h19", area: "administracion", texto: "Entiendo cómo manejar una agenda de citas y coordinar actividades entre varias personas" },
-  { id: "h20", area: "administracion", texto: "Puedo usar herramientas de oficina como Word, Excel y correo electrónico de forma eficiente" },
+  { id: "h17", area: "administracion", texto: "Puedo escribir una carta o correo claro y ordenado, cuidando la ortografía y la presentación" },
+  { id: "h18", area: "administracion", texto: "En mi cuarto o mochila, tengo mis cosas organizadas de modo que sé dónde está cada cosa" },
+  { id: "h19", area: "administracion", texto: "Puedo organizar una actividad grupal (un trabajo en equipo, un evento) coordinando qué hace cada quien y cuándo" },
+  { id: "h20", area: "administracion", texto: "Puedo usar un procesador de texto y una hoja de cálculo básica, y enviar correos sin necesitar ayuda" },
 
   // --- tecnologia (4) ---
-  { id: "h21", area: "tecnologia", texto: "Puedo identificar y resolver problemas comunes en una computadora o dispositivo tecnológico" },
-  { id: "h22", area: "tecnologia", texto: "Sé cómo conectar y configurar equipos de red básicos como routers o switches" },
-  { id: "h23", area: "tecnologia", texto: "Entiendo cómo funciona un sistema operativo y puedo instalarlo o actualizarlo cuando es necesario" },
-  { id: "h24", area: "tecnologia", texto: "Puedo leer un mensaje de error o log del sistema y deducir qué está fallando" },
+  { id: "h21", area: "tecnologia", texto: "Cuando mi celular o computadora tiene un problema, busco la solución yo mismo antes de pedirle ayuda a alguien" },
+  { id: "h22", area: "tecnologia", texto: "He conectado mi casa a internet o ayudado a alguien a hacerlo, siguiendo instrucciones del proveedor" },
+  { id: "h23", area: "tecnologia", texto: "Puedo instalar programas en una computadora, incluyendo controladores como los de una impresora" },
+  { id: "h24", area: "tecnologia", texto: "Cuando aparece un mensaje de error en mi pantalla, lo leo con atención y trato de entender qué me está diciendo" },
 
   // --- diseno (4) ---
-  { id: "h25", area: "diseno", texto: "Puedo usar software de edición de imágenes para retocar fotos y crear composiciones visuales" },
-  { id: "h26", area: "diseno", texto: "Sé cómo aplicar principios básicos de tipografía, color y composición en un diseño" },
-  { id: "h27", area: "diseno", texto: "Entiendo cómo adaptar un diseño a distintos formatos: redes sociales, impresión o pantallas" },
-  { id: "h28", area: "diseno", texto: "Puedo producir una pieza visual (afiche, publicación, banner) que comunique un mensaje de forma clara y atractiva" },
+  { id: "h25", area: "diseno", texto: "He usado alguna app para editar fotos o crear contenido visual (Canva, PicsArt, Instagram) y me quedó bien" },
+  { id: "h26", area: "diseno", texto: "Cuando hago una presentación, cuido que se vea ordenada: letras legibles, colores que combinan, sin exceso" },
+  { id: "h27", area: "diseno", texto: "Sé ajustar el tamaño de una imagen o documento según para qué lo voy a usar (WhatsApp, imprimir, presentación)" },
+  { id: "h28", area: "diseno", texto: "He diseñado un afiche, invitación o publicación para redes sociales y me quedó bien comunicado" },
 
   // --- salud-seguridad (4) ---
-  { id: "h29", area: "salud-seguridad", texto: "Puedo identificar factores de riesgo mecánico, eléctrico o químico en un ambiente de trabajo" },
-  { id: "h30", area: "salud-seguridad", texto: "Sé cómo aplicar los primeros pasos de atención en un accidente laboral antes de que llegue el personal médico" },
-  { id: "h31", area: "salud-seguridad", texto: "Entiendo cómo elaborar un informe básico de incidente o accidente según las normas de seguridad" },
-  { id: "h32", area: "salud-seguridad", texto: "Puedo explicarle a otras personas cómo usar correctamente el equipo de protección personal" },
+  { id: "h29", area: "salud-seguridad", texto: "En mi casa, noto cuando algo puede ser peligroso: cables pelados, cosas resbalosas, productos químicos mal guardados" },
+  { id: "h30", area: "salud-seguridad", texto: "Sé qué hacer básicamente si alguien se corta, se golpea o se desmaya: pedir ayuda, no mover si es grave, hacer presión" },
+  { id: "h31", area: "salud-seguridad", texto: "Puedo describir por escrito lo que pasó en un accidente, con detalles claros de qué, cuándo y cómo ocurrió" },
+  { id: "h32", area: "salud-seguridad", texto: "Puedo explicarle a alguien cómo protegerse ante un peligro común: usar casco, guantes, mascarilla, cinturón" },
 
   // --- mecanica (4) ---
-  { id: "h33", area: "mecanica", texto: "Puedo usar herramientas de taller (llaves, calibres, multímetro) de forma segura y precisa" },
-  { id: "h34", area: "mecanica", texto: "Sé cómo identificar síntomas de falla en un motor o sistema mecánico y proponer un diagnóstico" },
-  { id: "h35", area: "mecanica", texto: "Entiendo cómo realizar el mantenimiento preventivo básico de un vehículo o máquina" },
-  { id: "h36", area: "mecanica", texto: "Puedo leer un diagrama o manual técnico y seguir los pasos indicados para una reparación" },
+  { id: "h33", area: "mecanica", texto: "He usado herramientas básicas del hogar (martillo, destornillador, llave) para arreglar o armar algo" },
+  { id: "h34", area: "mecanica", texto: "Cuando algo se rompe en casa, trato de entender por qué falló antes de intentar arreglarlo o llamar a alguien" },
+  { id: "h35", area: "mecanica", texto: "Sé que los vehículos y máquinas necesitan revisiones periódicas (aceite, llantas, frenos) para no dañarse" },
+  { id: "h36", area: "mecanica", texto: "Puedo seguir instrucciones escritas paso a paso para armar o reparar algo (como armar un mueble siguiendo el manual)" },
 
   // --- agro-naturaleza nuevas: agro-produccion (4) ---
-  { id: "h37", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo sembrar una parcela de pasto para la alimentación del ganado" },
-  { id: "h38", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo aprender a operar un tractor agrícola u otra maquinaria de campo" },
-  { id: "h39", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Sé cómo producir plantas en campo abierto o en sistemas de hidroponía" },
-  { id: "h40", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Puedo gestionar la venta de productos agrícolas que se producen en una finca" },
+  { id: "h37", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He sembrado alguna planta en maceta o patio y la he cuidado hasta que creció" },
+  { id: "h38", area: "agro-naturaleza", subarea: "agro-produccion", texto: "Me llama la atención aprender a manejar maquinaria de campo como tractores o motosierras" },
+  { id: "h39", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He cuidado o ayudado a cuidar animales de granja (gallinas, cerdos, vacas, truchas) en casa o en una finca" },
+  { id: "h40", area: "agro-naturaleza", subarea: "agro-produccion", texto: "He vendido o ayudado a vender frutas, verduras u otros productos de la finca o huerto familiar en un mercado o feria" },
 
   // --- agro-naturaleza nuevas: agro-ecosistema (3) ---
-  { id: "h41", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Puedo preparar abonos orgánicos o compost para mejorar la salud del suelo de manera natural" },
-  { id: "h42", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Puedo identificar qué plantas nativas o silvestres benefician a los cultivos y al ecosistema" },
-  { id: "h43", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Entiendo cómo manejar plagas o enfermedades en cultivos sin depender de productos químicos" },
+  { id: "h41", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "He ayudado a sembrar plantas o cuidar un jardín/huerto en casa, en la escuela o en mi comunidad" },
+  { id: "h42", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "Sé distinguir entre plantas cultivadas y plantas silvestres en mi entorno cercano" },
+  { id: "h43", area: "agro-naturaleza", subarea: "agro-ecosistema", texto: "He visto o intentado controlar plagas en plantas usando métodos caseros (jabón, ajo, trampas)" },
 
   // --- finanzas nuevas: finanzas-contable (2) ---
-  { id: "h44", area: "finanzas", subarea: "finanzas-contable", texto: "Puedo preparar un estado de resultados o balance general básico para una empresa" },
-  { id: "h45", area: "finanzas", subarea: "finanzas-contable", texto: "Entiendo cómo aplicar la legislación tributaria al registrar las transacciones de un negocio" },
+  { id: "h44", area: "finanzas", subarea: "finanzas-contable", texto: "Cuando mi familia tiene ingresos y gastos, puedo ayudar a organizar cuánto entró y cuánto salió" },
+  { id: "h45", area: "finanzas", subarea: "finanzas-contable", texto: "Sé que los negocios deben pagar impuestos y entiendo por qué eso es importante para el país" },
 
   // --- finanzas nuevas: finanzas-banca (2) ---
-  { id: "h46", area: "finanzas", subarea: "finanzas-banca", texto: "Puedo explicarle a un cliente las condiciones de un crédito: tasa de interés, plazo y cuota mensual" },
-  { id: "h47", area: "finanzas", subarea: "finanzas-banca", texto: "Sé cómo evaluar si una persona califica para un préstamo según sus ingresos y deudas" },
+  { id: "h46", area: "finanzas", subarea: "finanzas-banca", texto: "Puedo explicarle a alguien en palabras simples qué significa pedir un préstamo y cuáles son los riesgos" },
+  { id: "h47", area: "finanzas", subarea: "finanzas-banca", texto: "Puedo evaluar si alguien puede pagar algo según lo que gana, usando lógica y sentido común" },
 ];
 
 // ============================================================
