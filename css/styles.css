@@ -506,7 +506,14 @@ body {
   width: 100%;
 }
 
-.escala-btn:hover, .escala-btn:focus {
+@media (hover: hover) {
+  .escala-btn:hover {
+    border-color: var(--blue);
+    background: #f0f4ff;
+  }
+}
+
+.escala-btn:focus-visible {
   border-color: var(--blue);
   background: #f0f4ff;
   outline: none;
